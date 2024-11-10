@@ -3,6 +3,7 @@ import Navigation from "./routes/navigation/navigation.route";
 import Home from "./routes/home/home.route";
 import Shop from "./routes/shop/shop.route";
 import SignUp from "./routes/sign-up/sign-up.route";
+import SignIn from "./routes/sign-in/sign-in.route";
 
 import "./App.css";
 
@@ -14,6 +15,7 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="shop" element={<Shop />} />
           <Route path="sign-up" element={<SignUp />} />
+          <Route path="sign-in" element={<SignIn />} />
         </Route>
       </Routes>
     </>
