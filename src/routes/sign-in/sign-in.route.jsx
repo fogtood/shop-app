@@ -3,8 +3,10 @@ import { FaFacebook, FaGoogle, FaGithub } from "react-icons/fa6";
 import Button from "../../components/button/button.component";
 import Input from "../../components/input/input.component";
 import { useNavigate } from "react-router-dom";
+import useDocumentTitle from "../../hooks/document-title.hook";
 
 const SignIn = () => {
+  useDocumentTitle("Sign In | Cannabud");
   const navigate = useNavigate();
 
   return (
