@@ -10,6 +10,7 @@ import {
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
 import { ClipLoader } from "react-spinners";
+import { toast } from "react-toastify";
 
 const defaultFormFields = {
   displayName: "",
@@ -53,6 +54,20 @@ const SignUp = () => {
     } catch (error) {
       console.error("Failed to create user:", error);
       setLoading(false);
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          toast.error("This email is already in use. Please try another.");
+          break;
+        case "auth/invalid-email":
+          toast.error("Please enter a valid email address.");
+          break;
+        case "auth/weak-password":
+          toast.error("Password should be at least 6 characters long.");
+          break;
+        default:
+          toast.error("An error occurred. Please try again.");
+          break;
+      }
     }
   };
 

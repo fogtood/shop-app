@@ -12,6 +12,7 @@ import {
 import { useDispatch } from "react-redux";
 import { login } from "../../store/reducers/authSlice";
 import { ClipLoader } from "react-spinners";
+import { toast } from "react-toastify";
 
 const defaultFormFields = {
   email: "",
@@ -66,6 +67,33 @@ const SignIn = () => {
     } catch (error) {
       setLoading(false);
       console.error(error);
+      switch (error.code) {
+        case "auth/user-not-found":
+          toast.error("No user found with this email.");
+          break;
+        case "auth/wrong-password":
+          toast.error("Incorrect password. Please try again.");
+          break;
+        case "auth/invalid-email":
+          toast.error("Please enter a valid email address.");
+          break;
+        case "auth/user-disabled":
+          toast.error("This account has been disabled.");
+          break;
+        case "auth/invalid-credential":
+          toast.error(
+            "Invalid credentials. Please enter valid email and password."
+          );
+          break;
+        case "auth/network-request-failed":
+          toast.error(
+            "Network error. Check your internet connection and try again."
+          );
+          break;
+        default:
+          toast.error("An error occurred. Please try again.");
+          break;
+      }
     }
   };
 
