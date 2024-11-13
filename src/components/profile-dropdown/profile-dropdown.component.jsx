@@ -6,6 +6,8 @@ import { FaUser } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { IoIosArrowDown } from "react-icons/io";
 import userAvatar from ".././../assets/defaultAvatar.jpg";
+import { signOutUser } from "../../utils/firebase/firebase.utils";
+import { toast } from "react-toastify";
 
 const ProfileDropdown = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -29,10 +31,16 @@ const ProfileDropdown = () => {
     }
   };
 
-  const signOut = (e) => {
-    dispatch(logout());
-    navigate("/");
-    toggleDropdown(e);
+  const signOut = async (e) => {
+    try {
+      await signOutUser();
+      dispatch(logout());
+      navigate("/");
+      toggleDropdown(e);
+    } catch (error) {
+      console.log(error);
+      toast.error("Error signing out");
+    }
   };
 
   // Close dropdown on outside click
