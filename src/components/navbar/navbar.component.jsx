@@ -2,6 +2,8 @@ import { Search, ShoppingCart } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import Button from "../button/button.component";
+import { useSelector } from "react-redux";
+import ProfileDropdown from "../profile-dropdown/profile-dropdown.component";
 
 const navbarLinks = [
   {
@@ -25,6 +27,7 @@ const navbarLinks = [
 const Navbar = () => {
   const navbar = useRef();
   const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
 
   const scrollHandler = () => {
     if (navbar.current && window.screen.width > 480) {
@@ -71,17 +74,29 @@ const Navbar = () => {
               <ShoppingCart />
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <Button buttonType={"primary"} onClick={() => navigate("/sign-up")}>
-              Sign Up
-            </Button>
-            <Button
-              buttonType={"secondary"}
-              onClick={() => navigate("/sign-in")}
-            >
-              Sign In
-            </Button>
-          </div>
+          {user ? (
+            <div className="flex items-center gap-4">
+              <p className="font-medium test-sm text-text">
+                {user.displayName}
+              </p>
+              <ProfileDropdown />
+            </div>
+          ) : (
+            <div className="flex items-center gap-4">
+              <Button
+                buttonType={"primary"}
+                onClick={() => navigate("/sign-up")}
+              >
+                Sign Up
+              </Button>
+              <Button
+                buttonType={"secondary"}
+                onClick={() => navigate("/sign-in")}
+              >
+                Sign In
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </nav>

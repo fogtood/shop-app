@@ -60,7 +60,7 @@ const SignIn = () => {
           ? userDoc.createdAt.toDate().toISOString()
           : null,
       };
-      dispatch(login({ userData }));
+      dispatch(login({ ...userData }));
       setLoading(false);
       resetFormFields();
       navigate("/");
