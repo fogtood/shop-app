@@ -3,11 +3,9 @@ import Navbar from "../../components/navbar/navbar.component";
 
 const Navigation = () => {
   return (
-    <div className="bg-main pt-6">
+    <div className="bg-main pt-6 min-h-screen">
       <Navbar />
-      <div className="min-h-screen">
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   );
 };
