@@ -45,22 +45,7 @@ const SignIn = () => {
     const { email, password } = formFields;
 
     try {
-      const { user } = await signInAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      const userDoc = await fetchUserDocumentFromAuth(user.uid);
-
-      const userData = {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName || userDoc.displayName,
-        emailVerified: user.emailVerified,
-        createdAt: userDoc.createdAt
-          ? userDoc.createdAt.toDate().toISOString()
-          : null,
-      };
-      dispatch(login({ ...userData }));
+      await signInAuthUserWithEmailAndPassword(email, password);
       setLoading(false);
       resetFormFields();
       navigate("/");
