@@ -53,8 +53,8 @@ const App = () => {
         <div className="flex items-center justify-center gap-5">
           <ClipLoader size={100} speedMultiplier={0.6} />
           <div>
-            <h1 className="text-3xl">Cannabud Stores</h1>
-            <p>Enjoy shopping!</p>
+            <h1 className="text-3xl font-bold">Cannabud Stores</h1>
+            <p className="font-medium">Enjoy shopping!</p>
           </div>
         </div>
       </div>
