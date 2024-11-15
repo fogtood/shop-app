@@ -66,13 +66,13 @@ const ProfileDropdown = () => {
       </div>
       <div
         ref={dropdownRef}
-        className={`w-48 absolute right-0 md:mt-3 top-full p-2 bg-white font-medium overflow-hidden ${
+        className={`w-48 absolute right-0 md:mt-3 top-full bg-white font-medium overflow-hidden ${
           dropdownVisible ? "block" : "hidden"
         }`}
       >
         <Link
           to="/account"
-          className="flex items-center justify-between whitespace-nowrap px-4 py-3 text-sm"
+          className="flex items-center justify-between whitespace-nowrap px-4 py-3 text-sm hover:bg-gray-100"
           onClick={toggleDropdown}
         >
           View Account
@@ -81,7 +81,7 @@ const ProfileDropdown = () => {
 
         <button
           onClick={signOut}
-          className="flex items-center justify-between w-full text-left px-4 py-3 text-sm border-t whitespace-nowrap"
+          className="flex items-center justify-between w-full text-left px-4 py-3 text-sm border-t whitespace-nowrap hover:bg-gray-100"
         >
           Sign Out
           <MdLogout className="text-xl text-red-400" />

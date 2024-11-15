@@ -5,12 +5,7 @@ import Input from "../../components/input/input.component";
 import { useNavigate } from "react-router-dom";
 import useDocumentTitle from "../../hooks/document-title.hook";
 import { useState } from "react";
-import {
-  fetchUserDocumentFromAuth,
-  signInAuthUserWithEmailAndPassword,
-} from "../../utils/firebase/firebase.utils";
-import { useDispatch } from "react-redux";
-import { login } from "../../store/reducers/authSlice";
+import { signInAuthUserWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 
@@ -22,7 +17,6 @@ const defaultFormFields = {
 const SignIn = () => {
   useDocumentTitle("Sign In | Cannabud");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   const [formFields, setFormFields] = useState(defaultFormFields);
