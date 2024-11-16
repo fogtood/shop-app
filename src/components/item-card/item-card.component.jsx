@@ -5,7 +5,7 @@ import { addToCart, removeFromCart } from "../../store/reducers/cartSlice";
 import { toast } from "react-toastify";
 
 const ItemCard = ({ item }) => {
-  const cart = useSelector((state) => state.cart.cart);
+  const cart = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
 
   const addedToCart = useMemo(
@@ -15,16 +15,20 @@ const ItemCard = ({ item }) => {
 
   const addItemToCart = (item) => {
     dispatch(addToCart({ ...item }));
-    toast.success("Added to cart");
+    toast.success("item added to cart", {
+      position: "bottom-right",
+    });
   };
 
   const removeItemFromCart = (item) => {
     dispatch(removeFromCart({ ...item }));
-    toast.warn("Removed from cart");
+    toast.warn("item removed from cart", {
+      position: "bottom-right",
+    });
   };
 
   return (
-    <div className="group relative bg-white cursor-pointer overflow-hidden h-80">
+    <div className="group relative bg-[#F6F6F6] cursor-pointer overflow-hidden h-80">
       {addedToCart && (
         <IoMdCheckmark className="absolute top-3 right-3 text-green-500 text-xl" />
       )}

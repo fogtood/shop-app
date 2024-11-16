@@ -28,6 +28,7 @@ const Navbar = () => {
   const navbar = useRef();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
+  const cart = useSelector((state) => state.cart.cartItems);
 
   const scrollHandler = () => {
     if (navbar.current && window.screen.width > 480) {
@@ -70,8 +71,13 @@ const Navbar = () => {
         <div className="flex items-center justify-between gap-16">
           <div className="flex items-center">
             <Searchbox />
-            <div className="p-2 hover:bg-gray-100 cursor-pointer">
+            <div className="relative p-2 hover:bg-gray-100 cursor-pointer">
               <ShoppingCart />
+              {cart.length > 0 && (
+                <div className="absolute bg-red-500 h-5 w-5 rounded-full -top-0 -right-0 text-white flex flex-col items-center justify-center text-xs">
+                  {cart.length}
+                </div>
+              )}
             </div>
           </div>
           {user ? (
