@@ -44,7 +44,7 @@ const ItemCard = ({ item }) => {
       {/* Middle Section */}
       <div className="h-[40%] group-hover:h-[30%] flex flex-col items-center justify-center font-medium transition-transform duration-300 gap-y-3">
         <p className="text-text">{item.name}</p>
-        <p className="text-xl font-semibold">${item.price}</p>
+        <p className="text-xl font-semibold">${item.price.toFixed(2)}</p>
       </div>
 
       {/* Button */}

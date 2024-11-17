@@ -68,7 +68,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Navigation />}>
           <Route index element={<Home />} />
-          <Route path="shop/*" element={<Shop />} />
+          <Route path="shop" element={<Shop />} />
           <Route path="shop/:category" element={<Category />} />
 
           {/* Redirect signed-in users away from sign-in and sign-up pages */}
