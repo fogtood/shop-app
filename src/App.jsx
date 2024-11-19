@@ -17,6 +17,7 @@ import { ClipLoader } from "react-spinners";
 import Account from "./routes/account/account.route";
 import AuthRedirectRoute from "./utils/private-routes/auth-redirect.route";
 import Category from "./routes/category/category.route";
+import CheckOut from "./routes/checkout/checkout.route";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -80,6 +81,7 @@ const App = () => {
           {/* Private Routes */}
           <Route element={<PrivateRoute />}>
             <Route path="/account" element={<Account />} />
+            <Route path="/checkout" element={<CheckOut />} />
           </Route>
         </Route>
       </Routes>

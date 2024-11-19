@@ -1,6 +1,6 @@
 import { Search, ShoppingCart } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import Button from "../button/button.component";
 import { useSelector } from "react-redux";
 import ProfileDropdown from "../profile-dropdown/profile-dropdown.component";
@@ -28,6 +28,7 @@ const navbarLinks = [
 const Navbar = () => {
   const navbar = useRef();
   const navigate = useNavigate();
+  const location = useLocation();
   const user = useSelector((state) => state.auth.user);
   const cart = useSelector((state) => state.cart.cartItems);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -77,9 +78,10 @@ const Navbar = () => {
           <div className="flex items-center justify-between gap-16">
             <div className="flex items-center">
               <Searchbox />
-              <div
-                className="relative p-2 hover:bg-gray-100 cursor-pointer"
+              <button
+                className="relative p-2 hover:bg-gray-100 cursor-pointer disabled:cursor-not-allowed disabled:opacity-30"
                 onClick={toggleSheet}
+                disabled={location.pathname === "/checkout"}
               >
                 <ShoppingCart />
                 {cart.length > 0 && (
@@ -87,7 +89,7 @@ const Navbar = () => {
                     {cart.length}
                   </div>
                 )}
-              </div>
+              </button>
             </div>
             {user ? (
               <div className="flex items-center gap-4">
@@ -100,12 +102,14 @@ const Navbar = () => {
               <div className="flex items-center gap-4">
                 <Button
                   buttonType={"primary"}
+                  disabled={location.pathname === "/sign-up"}
                   onClick={() => navigate("/sign-up")}
                 >
                   Sign Up
                 </Button>
                 <Button
                   buttonType={"secondary"}
+                  disabled={location.pathname === "/sign-in"}
                   onClick={() => navigate("/sign-in")}
                 >
                   Sign In

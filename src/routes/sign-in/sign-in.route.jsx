@@ -77,7 +77,11 @@ const SignIn = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto my-10 bg-main border border-primary">
+    <div
+      className={`max-w-3xl mx-auto my-10 bg-main border border-primary ${
+        loading && "inset-0 bg-gray-50 opacity-50"
+      }`}
+    >
       <div className="px-6 py-5">
         <h2 className="font-semibold text-lg">Sign in to Cannabud</h2>
         <div className="grid grid-cols-2 gap-x-16 my-8">
@@ -129,6 +133,7 @@ const SignIn = () => {
               textColor={"text-white"}
               hoverColor={"hover:bg-blue-700"}
               icon={<FaFacebook />}
+              disabled={loading}
             >
               Continue with Facebook
             </Button>
@@ -140,6 +145,7 @@ const SignIn = () => {
               hoverColor={"hover:bg-primary hover:border-none hover:py-[13px]"}
               border={"border border-primary"}
               icon={<FaGoogle />}
+              disabled={loading}
             >
               Continue with Google
             </Button>
@@ -151,15 +157,20 @@ const SignIn = () => {
               hoverColor={"hover:bg-black/80"}
               border={"border border-primary"}
               icon={<FaGithub />}
+              disabled={loading}
             >
               Continue with Github
             </Button>
           </div>
         </div>
       </div>
-      <div className="bg-gray-200 py-3 flex items-center justify-center text-black font-medium text-sm gap-5">
+      <div className="bg-gray-100 py-3 flex items-center justify-center text-black font-medium text-sm gap-5 border-t border-primary">
         Don't have an account?
-        <Button buttonType={"secondary"} onClick={() => navigate("/sign-up")}>
+        <Button
+          buttonType={"secondary"}
+          disabled={loading}
+          onClick={() => navigate("/sign-up")}
+        >
           Sign Up
         </Button>
       </div>

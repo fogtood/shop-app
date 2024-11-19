@@ -8,10 +8,13 @@ import {
   decreaseItemQuantity,
 } from "../../store/reducers/cartSlice";
 import Button from "../button/button.component";
+import { useNavigate } from "react-router-dom";
 
 const Sheet = ({ isSheetOpen, closeSheet }) => {
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const calculateCartTotal = (cartItems) => {
     return cartItems
@@ -66,7 +69,16 @@ const Sheet = ({ isSheetOpen, closeSheet }) => {
               <p className="text-text text-sm font-medium">Subtotal Amount:</p>
               <p className="text-2xl font-semibold">${totalCartPrice}</p>
             </div>
-            <Button buttonType={"primary"}>CHECK OUT</Button>
+            <Button
+              buttonType={"primary"}
+              onClick={() => {
+                user ? navigate("/checkout") : navigate("/sign-in");
+                closeSheet();
+              }}
+              disabled={cartItems.length === 0}
+            >
+              CHECK OUT
+            </Button>
           </div>
         </div>
       </div>
@@ -80,7 +92,7 @@ export default Sheet;
 const MiniButton = ({ children, ...otherProps }) => {
   return (
     <button
-      className="border border-primary bg-transparent hover:bg-primary p-2.5 font-semibold text-sm transition-colors text-text disabled:cursor-not-allowed"
+      className="border border-primary bg-transparent hover:bg-primary p-2.5 font-semibold text-sm transition-colors text-text disabled:cursor-not-allowed disabled:bg-transparent disabled:opacity-30"
       {...otherProps}
     >
       {children}
