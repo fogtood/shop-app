@@ -8,6 +8,7 @@ import { useState } from "react";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
+  signInWithGoogle,
 } from "../../utils/firebase/firebase.utils";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
@@ -50,7 +51,6 @@ const SignUp = () => {
       // onSucess
       setLoading(false);
       resetFormFields();
-      navigate("/sign-in");
     } catch (error) {
       console.error("Failed to create user:", error);
       setLoading(false);
@@ -63,6 +63,42 @@ const SignUp = () => {
           break;
         case "auth/weak-password":
           toast.error("Password should be at least 6 characters long.");
+          break;
+        default:
+          toast.error("An error occurred. Please try again.");
+          break;
+      }
+    }
+  };
+
+  const signInAuthUserWithGoogle = async () => {
+    setLoading(true);
+    try {
+      const { user } = await signInWithGoogle();
+      await createUserDocumentFromAuth(user);
+      setLoading(false);
+      navigate("/");
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+      switch (error.code) {
+        case "auth/popup-closed-by-user":
+          toast.error(
+            "Sign-in popup was closed before completing the sign-in. Please try again."
+          );
+          break;
+        case "auth/network-request-failed":
+          toast.error(
+            "Network issue occurred. Please check your connection and try again."
+          );
+          break;
+        case "auth/email-already-in-use":
+          toast.error(
+            "The email address is already associated with another account."
+          );
+          break;
+        case "auth/user-not-found":
+          toast.error("No user found with the provided credentials.");
           break;
         default:
           toast.error("An error occurred. Please try again.");
@@ -151,6 +187,7 @@ const SignUp = () => {
               border={"border border-primary"}
               icon={<FaGoogle />}
               disabled={loading}
+              onClick={signInAuthUserWithGoogle}
             >
               Continue with Google
             </Button>

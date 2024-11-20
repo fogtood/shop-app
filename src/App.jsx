@@ -34,11 +34,12 @@ const App = () => {
         const userData = {
           uid: user.uid,
           email: user.email,
-          displayName: user.displayName || userDoc.displayName,
-          emailVerified: user.emailVerified,
+          displayName: userDoc.displayName,
+          avatar: userDoc.avatar,
           createdAt: userDoc.createdAt
             ? userDoc.createdAt.toDate().toISOString()
             : null,
+          emailVerified: user.emailVerified,
         };
         dispatch(login({ ...userData }));
       } else {
