@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Navigation from "./routes/navigation/navigation.route";
 import Home from "./routes/home/home.route";
 import Shop from "./routes/shop/shop.route";
@@ -24,7 +24,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { loading } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -34,12 +33,12 @@ const App = () => {
         const userData = {
           uid: user.uid,
           email: user.email,
-          displayName: userDoc.displayName,
-          avatar: userDoc.avatar,
-          createdAt: userDoc.createdAt
+          displayName: userDoc?.displayName,
+          avatar: userDoc?.avatar,
+          createdAt: userDoc?.createdAt
             ? userDoc.createdAt.toDate().toISOString()
             : null,
-          emailVerified: user.emailVerified,
+          emailVerified: userDoc?.emailVerified,
         };
         dispatch(login({ ...userData }));
       } else {
@@ -48,7 +47,7 @@ const App = () => {
     });
 
     return () => unsubscribe();
-  }, [dispatch, navigate]);
+  }, [dispatch]);
 
   if (loading) {
     return (

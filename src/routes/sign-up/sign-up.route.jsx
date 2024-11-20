@@ -157,7 +157,7 @@ const SignUp = () => {
                   }
                   disabled={loading}
                 >
-                  Sign Up
+                  {loading ? "Signing Up" : "Sign Up"}
                 </Button>
               </div>
             </form>

@@ -94,7 +94,11 @@ const Navbar = () => {
             {user ? (
               <div className="flex items-center gap-4">
                 <p className="font-medium test-sm text-text">
-                  {user.displayName}
+                  {user?.displayName?.split(" ")?.length > 1
+                    ? user?.displayName?.split(" ")[0]
+                    : user?.displayName?.length > 16
+                    ? user?.displayName?.slice(0, 16) + "..."
+                    : user?.displayName}
                 </p>
                 <ProfileDropdown />
               </div>
