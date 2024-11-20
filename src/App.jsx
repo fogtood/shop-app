@@ -18,6 +18,8 @@ import Account from "./routes/account/account.route";
 import AuthRedirectRoute from "./utils/private-routes/auth-redirect.route";
 import Category from "./routes/category/category.route";
 import CheckOut from "./routes/checkout/checkout.route";
+import Featured from "./routes/featured/featured.route";
+import Recommended from "./routes/recommended/recommended.route";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -71,6 +73,8 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="shop" element={<Shop />} />
           <Route path="shop/:category" element={<Category />} />
+          <Route path="/featured" element={<Featured />} />
+          <Route path="/recommended" element={<Recommended />} />
 
           {/* Redirect signed-in users away from sign-in and sign-up pages */}
           <Route element={<AuthRedirectRoute />}>
