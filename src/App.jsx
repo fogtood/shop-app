@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Navigation from "./routes/navigation/navigation.route";
 import Home from "./routes/home/home.route";
 import Shop from "./routes/shop/shop.route";
@@ -20,6 +20,7 @@ import Category from "./routes/category/category.route";
 import CheckOut from "./routes/checkout/checkout.route";
 import Featured from "./routes/featured/featured.route";
 import Recommended from "./routes/recommended/recommended.route";
+import EditProfile from "./routes/edit-profile/edit-profile.route";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -85,8 +86,11 @@ const App = () => {
           {/* Private Routes */}
           <Route element={<PrivateRoute />}>
             <Route path="/account" element={<Account />} />
+            <Route path="/account/edit" element={<EditProfile />} />
             <Route path="/checkout" element={<CheckOut />} />
           </Route>
+
+          <Route path="*" element={<Navigate to="/" />} />
         </Route>
       </Routes>
     </>

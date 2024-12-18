@@ -28,7 +28,7 @@ const ItemCard = ({ item }) => {
   };
 
   return (
-    <div className="group relative bg-[#F6F6F6] cursor-pointer overflow-hidden h-80">
+    <div className="group relative bg-[#f2f2f2] cursor-pointer overflow-hidden h-80">
       {addedToCart && (
         <IoMdCheckmark className="absolute top-3 right-3 text-green-500 text-xl" />
       )}

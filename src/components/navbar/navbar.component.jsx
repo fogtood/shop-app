@@ -5,6 +5,7 @@ import Button from "../button/button.component";
 import { useSelector } from "react-redux";
 import ProfileDropdown from "../profile-dropdown/profile-dropdown.component";
 import Sheet from "../sheet/sheet.component";
+import brand from "../../assets/brand.png";
 
 const navbarLinks = [
   {
@@ -57,7 +58,7 @@ const Navbar = () => {
         <div className="px-[4rem] flex items-center justify-between">
           <div className="flex items-center gap-10">
             <Link to="/">
-              <img src={"src/assets/brand.png"} alt="" />
+              <img src={brand} alt="" />
             </Link>
             <div className="flex items-center gap-8">
               {navbarLinks.map(({ name, url }, idx) => (
