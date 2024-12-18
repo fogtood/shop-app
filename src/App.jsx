@@ -32,17 +32,27 @@ const App = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener(async (user) => {
       if (user) {
-        const userDoc = await fetchUserDocumentFromAuth(user.uid);
+        let userDoc = null;
+        let attempts = 0;
+
+        while (!userDoc && attempts < 5) {
+          userDoc = await fetchUserDocumentFromAuth(user.uid);
+          attempts += 1;
+          if (!userDoc)
+            await new Promise((resolve) => setTimeout(resolve, 500)); // Retry after 500ms
+        }
+
         const userData = {
           uid: user.uid,
-          email: user.email,
-          displayName: userDoc?.displayName,
-          avatar: userDoc?.avatar,
-          createdAt: userDoc?.createdAt
+          email: userDoc.email,
+          displayName: userDoc.displayName,
+          avatar: userDoc.avatar,
+          createdAt: userDoc.createdAt
             ? userDoc.createdAt.toDate().toISOString()
             : null,
-          emailVerified: userDoc?.emailVerified,
+          emailVerified: userDoc.emailVerified,
         };
+
         dispatch(login({ ...userData }));
       } else {
         dispatch(logout());

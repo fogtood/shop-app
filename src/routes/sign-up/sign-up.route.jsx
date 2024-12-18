@@ -8,6 +8,7 @@ import { useState } from "react";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
+  fetchUserDocumentFromAuth,
   signInWithGoogle,
 } from "../../utils/firebase/firebase.utils";
 import { ClipLoader } from "react-spinners";
@@ -48,9 +49,11 @@ const SignUp = () => {
         password
       );
       await createUserDocumentFromAuth(user, { displayName });
+      await fetchUserDocumentFromAuth(user.uid);
       // onSucess
       setLoading(false);
       resetFormFields();
+      navigate("/");
     } catch (error) {
       console.error("Failed to create user:", error);
       setLoading(false);
@@ -76,6 +79,7 @@ const SignUp = () => {
     try {
       const { user } = await signInWithGoogle();
       await createUserDocumentFromAuth(user);
+      await fetchUserDocumentFromAuth(user.uid);
       setLoading(false);
       navigate("/");
     } catch (error) {
