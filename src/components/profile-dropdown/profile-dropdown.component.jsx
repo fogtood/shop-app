@@ -58,8 +58,9 @@ const ProfileDropdown = () => {
         onClick={toggleDropdown}
       >
         <img
-          src={user?.avatar || userAvatar}
+          src={user.avatar || userAvatar}
           alt="display-img"
+          referrerPolicy="no-referrer"
           className="h-8 w-8 cursor-pointer rounded-full object-cover"
         />
         <IoIosArrowDown className="text-xl text-text" />

@@ -24,6 +24,7 @@ const ProfileBannerAvatar = ({ edit }) => {
             <img
               src={user.avatar || userAvatar}
               alt="user-avatar"
+              referrerPolicy="no-referrer"
               className="rounded-full h-[94px] w-[94px] border-4 border-white"
             />
             {edit && (
