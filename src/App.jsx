@@ -10,7 +10,7 @@ import {
   fetchUserDocumentFromAuth,
 } from "./utils/firebase/firebase.utils";
 import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "./store/reducers/authSlice";
+import { login, logout, setError } from "./store/reducers/authSlice";
 import { ToastContainer } from "react-toastify";
 import PrivateRoute from "./utils/private-routes/private-route.util";
 import { ClipLoader } from "react-spinners";
@@ -27,7 +27,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.auth);
+  const { loading, error } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener(async (user) => {
@@ -36,24 +36,37 @@ const App = () => {
         let attempts = 0;
 
         while (!userDoc && attempts < 5) {
-          userDoc = await fetchUserDocumentFromAuth(user.uid);
-          attempts += 1;
-          if (!userDoc)
-            await new Promise((resolve) => setTimeout(resolve, 500)); // Retry after 500ms
+          try {
+            userDoc = await fetchUserDocumentFromAuth(user.uid);
+            attempts += 1;
+            if (!userDoc)
+              await new Promise((resolve) => setTimeout(resolve, 500)); // Retry after 500ms
+          } catch (_) {
+            dispatch(
+              setError("Failed to load user data. Please try again later.")
+            );
+            break;
+          }
         }
 
-        const userData = {
-          uid: user.uid,
-          email: userDoc.email,
-          displayName: userDoc.displayName,
-          avatar: userDoc.avatar,
-          createdAt: userDoc.createdAt
-            ? userDoc.createdAt.toDate().toISOString()
-            : null,
-          emailVerified: userDoc.emailVerified,
-        };
+        if (userDoc) {
+          const userData = {
+            uid: user.uid,
+            email: userDoc.email,
+            displayName: userDoc.displayName,
+            avatar: userDoc.avatar,
+            mobile: userDoc?.mobile,
+            address: userDoc?.address,
+            createdAt: userDoc.createdAt
+              ? userDoc.createdAt.toDate().toISOString()
+              : null,
+            emailVerified: userDoc.emailVerified,
+          };
 
-        dispatch(login({ ...userData }));
+          dispatch(login({ ...userData }));
+        } else {
+          dispatch(setError("Failed to load data."));
+        }
       } else {
         dispatch(logout());
       }
@@ -69,8 +82,27 @@ const App = () => {
           <ClipLoader size={100} speedMultiplier={0.6} />
           <div>
             <h1 className="text-3xl font-bold">Cannabud Stores</h1>
-            <p className="font-medium">Enjoy shopping!</p>
+            <p className="font-medium">Shopping at ease!</p>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-main">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold">Error</h1>
+          <p className="font-medium">
+            {error}{" "}
+            <span
+              className="underline text-blue-500 cursor-pointer"
+              onClick={() => window.location.reload()}
+            >
+              retry
+            </span>
+          </p>
         </div>
       </div>
     );

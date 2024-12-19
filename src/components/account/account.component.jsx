@@ -11,19 +11,19 @@ const Account = () => {
       <div className="mt-20 mb-10 px-6">
         <h1 className="font-bold text-2xl">{user.displayName}</h1>
         <div className="space-y-1 my-6">
-          <p className="text-sm  italic">Email</p>
+          <p className="text-sm italic">Email</p>
           <p className="font-medium">{user.email}</p>
         </div>
         <div className="space-y-1 my-6">
-          <p className="text-sm  italic">Address</p>
+          <p className="text-sm italic">Address</p>
           <p className="font-medium">{user.address || "Address not set"}</p>
         </div>
         <div className="space-y-1 my-6">
-          <p className="text-sm  italic">Mobile</p>
-          <p className="font-medium">{user.address || "Mobile not set"}</p>
+          <p className="text-sm italic">Mobile</p>
+          <p className="font-medium">{user.mobile || "Mobile not set"}</p>
         </div>
         <div className="space-y-1 my-6">
-          <p className="text-sm  italic">Date joined</p>
+          <p className="text-sm italic">Date joined</p>
           <p className="font-medium">{dateFormatter(user.createdAt)}</p>
         </div>
       </div>
