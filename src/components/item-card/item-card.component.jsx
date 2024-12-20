@@ -16,14 +16,14 @@ const ItemCard = ({ item }) => {
   const addItemToCart = (item) => {
     dispatch(addToCart({ ...item }));
     toast.success("item added to cart", {
-      position: "bottom-right",
+      position: "top-center",
     });
   };
 
   const removeItemFromCart = (item) => {
     dispatch(removeFromCart({ ...item }));
     toast.warn("item removed from cart", {
-      position: "bottom-right",
+      position: "top-center",
     });
   };
 

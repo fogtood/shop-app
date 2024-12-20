@@ -127,6 +127,7 @@ const EditProfile = () => {
               name={"displayName"}
               value={formFields.displayName}
               onChange={handleInputChange}
+              required
             />
             <Input
               label={"Email Address"}

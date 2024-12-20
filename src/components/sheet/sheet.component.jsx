@@ -72,7 +72,7 @@ const Sheet = ({ isSheetOpen, closeSheet }) => {
             <Button
               buttonType={"primary"}
               onClick={() => {
-                user ? navigate("/checkout") : navigate("/sign-in");
+                user ? navigate("/checkout?step=1") : navigate("/sign-in");
                 closeSheet();
               }}
               disabled={cartItems.length === 0}
@@ -100,7 +100,7 @@ const MiniButton = ({ children, ...otherProps }) => {
   );
 };
 
-const CartItemCard = ({ item }) => {
+export const CartItemCard = ({ item }) => {
   const dispatch = useDispatch();
 
   const calculateItemTotal = (item) => {

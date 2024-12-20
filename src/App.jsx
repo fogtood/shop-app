@@ -41,7 +41,7 @@ const App = () => {
             attempts += 1;
             if (!userDoc)
               await new Promise((resolve) => setTimeout(resolve, 500)); // Retry after 500ms
-          } catch (_) {
+          } catch (error) {
             dispatch(
               setError("Failed to load user data. Please try again later.")
             );
@@ -129,7 +129,7 @@ const App = () => {
           <Route element={<PrivateRoute />}>
             <Route path="/account" element={<Account />} />
             <Route path="/account/edit" element={<EditProfile />} />
-            <Route path="/checkout" element={<CheckOut />} />
+            <Route path="/checkout/*" element={<CheckOut />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" />} />
