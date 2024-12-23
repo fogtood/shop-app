@@ -110,7 +110,7 @@ const App = () => {
 
   return (
     <>
-      <ToastContainer position="top-right" />
+      <ToastContainer position="top-center" />
       <Routes>
         <Route path="/" element={<Navigation />}>
           <Route index element={<Home />} />
