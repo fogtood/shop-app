@@ -42,6 +42,7 @@ const App = () => {
             if (!userDoc)
               await new Promise((resolve) => setTimeout(resolve, 500)); // Retry after 500ms
           } catch (error) {
+            console.error("Error fetching user document:", error); // Log the error for debugging
             dispatch(
               setError("Failed to load user data. Please try again later.")
             );
