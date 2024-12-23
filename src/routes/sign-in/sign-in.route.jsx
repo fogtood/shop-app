@@ -1,14 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import useDocumentTitle from "../../hooks/document-title.hook";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signInSchema } from "../../lib/schemas/authenticationSchema";
-import {
-  createUserDocumentFromAuth,
-  signInAuthUserWithEmailAndPassword,
-  signInWithGoogle,
-} from "../../utils/firebase/firebase.utils";
 import Button from "../../components/button/button.component";
 import Input from "../../components/input/input.component";
 import ErrorMessage from "../../components/error-message/error-message.component";
@@ -16,6 +11,13 @@ import { FaFacebook, FaGoogle, FaGithub } from "react-icons/fa6";
 import { ArrowRight } from "lucide-react";
 import { ClipLoader } from "react-spinners";
 import classNames from "classnames";
+import {
+  createUserDocumentFromAuth,
+  fetchUserDocumentFromAuth,
+  signInAuthUserWithEmailAndPassword,
+  signInWithGoogle,
+} from "../../utils/firebase/firebase.utils";
+import { signInSchema } from "../../lib/schemas/authenticationSchema";
 import { firebaseErrorMessages } from "../../utils/errorMessages";
 
 const SignIn = () => {
@@ -46,7 +48,11 @@ const SignIn = () => {
     const { email, password } = data;
 
     try {
-      await signInAuthUserWithEmailAndPassword(email, password);
+      const { user } = await signInAuthUserWithEmailAndPassword(
+        email,
+        password
+      );
+      await fetchUserDocumentFromAuth(user.uid);
       reset();
       setError(null);
       navigate("/");
@@ -66,6 +72,7 @@ const SignIn = () => {
     try {
       const { user } = await signInWithGoogle();
       await createUserDocumentFromAuth(user);
+      await fetchUserDocumentFromAuth(user.uid);
       setError(null);
       navigate("/");
     } catch (error) {
@@ -170,7 +177,7 @@ const SignIn = () => {
 
 export default SignIn;
 
-const SocialSignIn = ({
+export const SocialSignIn = ({
   isSubmitting,
   socialLoading,
   signInWithGoogleHandler,
