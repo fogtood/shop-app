@@ -3,13 +3,17 @@ import { useNavigate } from "react-router-dom";
 const CategoryItem = ({ category, categories, idx }) => {
   const navigate = useNavigate();
 
+  const isLastTwo =
+    idx === categories.length - 2 || idx === categories.length - 1;
+  const isLast = idx === categories.length - 1;
+
   return (
     <div
-      key={category.id}
       className={`${
-        (idx === categories.length - 2 || idx === categories.length - 1) &&
-        "col-span-3 row-span-4 h-[380px]"
-      } col-span-2 row-span-2 h-[240px] w-full flex items-center justify-center cursor-pointer overflow-hidden relative`}
+        isLastTwo ? "lg:col-span-3 lg:row-span-2 lg:h-[380px]" : "lg:col-span-2"
+      } ${
+        isLast ? "sm:col-span-2" : "sm:col-span-1"
+      } col-span-1 row-span-2 h-[240px] w-full flex items-center justify-center cursor-pointer overflow-hidden relative`}
       onClick={() => navigate(category.route)}
     >
       {/* Background image div */}
@@ -18,6 +22,7 @@ const CategoryItem = ({ category, categories, idx }) => {
         style={{
           backgroundImage: `url(${category.imageUrl})`,
           objectFit: "cover",
+          objectPosition: "center",
           height: "100%",
         }}
       />
