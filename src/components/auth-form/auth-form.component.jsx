@@ -122,6 +122,7 @@ const AuthForm = ({
                 >
                   {mode === "signin" && (
                     <button
+                      type="button"
                       className="underline text-sm text-black cursor-pointer"
                       onClick={() =>
                         !isSubmitting &&
