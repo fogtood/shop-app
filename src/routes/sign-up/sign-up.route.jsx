@@ -6,7 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../../components/button/button.component";
 import Input from "../../components/input/input.component";
 import ErrorMessage from "../../components/error-message/error-message.component";
-import { SocialSignIn } from "../sign-in/sign-in.route";
+import SocialSignIn from "../../components/social-auth/social-auth.component";
+import OrDivider from "../../components/or-divider/or-divider.component";
 import { ArrowRight } from "lucide-react";
 import { ClipLoader } from "react-spinners";
 import {
@@ -93,8 +94,8 @@ const SignUp = () => {
       >
         <div className="px-6 py-5">
           <h2 className="font-semibold text-lg">Sign up to Cannabud</h2>
-          <div className="grid grid-cols-2 gap-x-16 my-8">
-            <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-16 my-8">
+            <div className="order-3 sm:order-2 space-y-4">
               <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
                 <Input
                   type={"text"}
@@ -140,11 +141,19 @@ const SignUp = () => {
                 </div>
               </form>
             </div>
-            <SocialSignIn
-              isSubmitting={isSubmitting}
-              socialLoading={socialLoading}
-              signInWithGoogleHandler={signInWithGoogleHandler}
-            />
+
+            {/* Or divider */}
+            <div className="order-2 sm:order-2 sm:hidden">
+              <OrDivider />
+            </div>
+
+            <div className="order-1 sm:order-3">
+              <SocialSignIn
+                isSubmitting={isSubmitting}
+                socialLoading={socialLoading}
+                signInWithGoogleHandler={signInWithGoogleHandler}
+              />
+            </div>
           </div>
         </div>
         <div

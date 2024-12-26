@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import useDocumentTitle from "../../hooks/document-title.hook";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../../components/button/button.component";
 import Input from "../../components/input/input.component";
 import ErrorMessage from "../../components/error-message/error-message.component";
-import { FaFacebook, FaGoogle, FaGithub } from "react-icons/fa6";
+import SocialSignIn from "../../components/social-auth/social-auth.component";
+import OrDivider from "../../components/or-divider/or-divider.component";
 import { ArrowRight } from "lucide-react";
 import { ClipLoader } from "react-spinners";
 import classNames from "classnames";
@@ -97,8 +97,9 @@ const SignIn = () => {
       >
         <div className="px-6 py-5">
           <h2 className="font-semibold text-lg">Sign in to Cannabud</h2>
-          <div className="grid grid-cols-2 gap-x-16 my-8">
-            <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-16 my-8">
+            {/* Form section - second on mobile */}
+            <div className="order-3 sm:order-1 space-y-4">
               <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
                 <Input
                   type={"email"}
@@ -146,10 +147,20 @@ const SignIn = () => {
                 </div>
               </form>
             </div>
-            <SocialSignIn
-              socialLoading={socialLoading}
-              signInWithGoogleHandler={signInWithGoogleHandler}
-            />
+
+            {/* Or divider */}
+            <div className="order-2 sm:order-2 sm:hidden">
+              <OrDivider />
+            </div>
+
+            {/* Social sign in section - first on mobile, third on large screens */}
+            <div className="order-1 sm:order-3">
+              <SocialSignIn
+                isSubmitting={isSubmitting}
+                socialLoading={socialLoading}
+                signInWithGoogleHandler={signInWithGoogleHandler}
+              />
+            </div>
           </div>
         </div>
         <div
@@ -176,49 +187,3 @@ const SignIn = () => {
 };
 
 export default SignIn;
-
-export const SocialSignIn = ({
-  isSubmitting,
-  socialLoading,
-  signInWithGoogleHandler,
-}) => {
-  return (
-    <div className="space-y-5">
-      <Button
-        buttonType={"btnWithIcon"}
-        icon={<FaFacebook />}
-        bgColor={"bg-[#006CE6]"}
-        textColor={"text-white"}
-        hoverColor={"hover:bg-blue-700"}
-        disabled={isSubmitting || socialLoading}
-      >
-        Continue with Facebook
-      </Button>
-
-      <Button
-        buttonType={"btnWithIcon"}
-        icon={<FaGoogle />}
-        bgColor={"bg-white"}
-        textColor={"text-black"}
-        hoverColor={"hover:bg-primary hover:border-none hover:py-[13px]"}
-        border={"border border-primary"}
-        disabled={isSubmitting || socialLoading}
-        onClick={signInWithGoogleHandler}
-      >
-        Continue with Google
-      </Button>
-
-      <Button
-        buttonType={"btnWithIcon"}
-        icon={<FaGithub />}
-        bgColor={"bg-black"}
-        textColor={"text-white"}
-        hoverColor={"hover:bg-black/80"}
-        border={"border border-primary"}
-        disabled={isSubmitting || socialLoading}
-      >
-        Continue with Github
-      </Button>
-    </div>
-  );
-};
