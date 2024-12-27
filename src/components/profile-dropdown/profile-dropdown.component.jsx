@@ -5,7 +5,10 @@ import { logout } from "../../store/reducers/authSlice";
 import { FaUser } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { IoIosArrowDown } from "react-icons/io";
-import userAvatar from ".././../assets/defaultAvatar.jpg";
+import { HiOutlineLogin } from "react-icons/hi";
+import { BiUserPlus } from "react-icons/bi";
+import defaultAvatar from ".././../assets/defaultAvatar.jpg";
+import avatar from "../../assets/my_account.png";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 import { toast } from "react-toastify";
 
@@ -43,7 +46,6 @@ const ProfileDropdown = () => {
     }
   };
 
-  // Close dropdown on outside click
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -51,43 +53,99 @@ const ProfileDropdown = () => {
     };
   }, []);
 
+  const handleNavigation = (path) => {
+    navigate(path);
+    setDropdownVisible(false);
+  };
+
+  const guestDropdownContent = (
+    <div
+      ref={dropdownRef}
+      className={`w-48 absolute right-0 md:mt-3 top-full bg-white font-medium overflow-hidden shadow-lg rounded-md transition-all duration-200 ease-in-out transform ${
+        dropdownVisible
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 -translate-y-2 pointer-events-none"
+      }`}
+    >
+      <div className="px-4 py-3 text-sm text-gray-500 border-b bg-gray-50">
+        Sign in to access your account
+      </div>
+      <button
+        onClick={() => handleNavigation("/sign-in")}
+        className="flex items-center justify-between w-full text-left px-4 py-3 text-sm whitespace-nowrap hover:bg-gray-100 transition-colors duration-200 group"
+      >
+        <span className="group-hover:translate-x-1 transition-transform duration-200">
+          Sign In
+        </span>
+        <HiOutlineLogin className="text-xl text-gray-600 group-hover:scale-110 transition-transform duration-200" />
+      </button>
+      <button
+        onClick={() => handleNavigation("/sign-up")}
+        className="flex items-center justify-between w-full text-left px-4 py-3 text-sm border-t whitespace-nowrap hover:bg-gray-100 transition-colors duration-200 group"
+      >
+        <span className="group-hover:translate-x-1 transition-transform duration-200">
+          Sign Up
+        </span>
+        <BiUserPlus className="text-xl text-gray-600 group-hover:scale-110 transition-transform duration-200" />
+      </button>
+    </div>
+  );
+
+  const userDropdownContent = (
+    <div
+      ref={dropdownRef}
+      className={`w-48 absolute right-0 md:mt-3 top-full bg-white font-medium overflow-hidden shadow-lg transition-all duration-200 ease-in-out transform ${
+        dropdownVisible
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 -translate-y-2 pointer-events-none"
+      }`}
+    >
+      <Link
+        to="/account"
+        className="flex items-center justify-between whitespace-nowrap px-4 py-3 text-sm hover:bg-gray-100 transition-colors duration-200 group"
+        onClick={toggleDropdown}
+      >
+        <span className="group-hover:translate-x-1 transition-transform duration-200">
+          View Account
+        </span>
+        <FaUser className="text-xl group-hover:scale-110 transition-transform duration-200" />
+      </Link>
+
+      <button
+        onClick={signOut}
+        className="flex items-center justify-between w-full text-left px-4 py-3 text-sm border-t whitespace-nowrap hover:bg-gray-100 transition-colors duration-200 group"
+      >
+        <span className="group-hover:translate-x-1 transition-transform duration-200">
+          Sign Out
+        </span>
+        <MdLogout className="text-xl text-red-400 group-hover:scale-110 transition-transform duration-200" />
+      </button>
+    </div>
+  );
+
   return (
     <div className="flex items-center gap-8 profile-dropdown relative text-text">
       <div
-        className="flex items-center gap-2 cursor-pointer"
+        className="flex items-center gap-2 cursor-pointer group"
         onClick={toggleDropdown}
       >
-        <img
-          src={user.avatar || userAvatar}
-          alt="display-img"
-          referrerPolicy="no-referrer"
-          className="h-8 w-8 cursor-pointer rounded-full object-cover"
+        <div className="relative overflow-hidden rounded-full transition-transform duration-200">
+          <img
+            src={user ? user.avatar || defaultAvatar : avatar}
+            alt={user ? "display-img" : "guest-img"}
+            referrerPolicy="no-referrer"
+            className={`h-8 w-8 cursor-pointer object-cover transition-opacity duration-200 group-hover:opacity-90 ${
+              !user && "bg-gray-200 p-2"
+            }`}
+          />
+        </div>
+        <IoIosArrowDown
+          className={`text-xl text-text transition-transform duration-200 hidden md:block ${
+            dropdownVisible ? "rotate-180" : ""
+          } group-hover:text-gray-700`}
         />
-        <IoIosArrowDown className="text-xl text-text" />
       </div>
-      <div
-        ref={dropdownRef}
-        className={`w-48 absolute right-0 md:mt-3 top-full bg-white font-medium overflow-hidden ${
-          dropdownVisible ? "block" : "hidden"
-        }`}
-      >
-        <Link
-          to="/account"
-          className="flex items-center justify-between whitespace-nowrap px-4 py-3 text-sm hover:bg-gray-100"
-          onClick={toggleDropdown}
-        >
-          View Account
-          <FaUser className="text-xl" />
-        </Link>
-
-        <button
-          onClick={signOut}
-          className="flex items-center justify-between w-full text-left px-4 py-3 text-sm border-t whitespace-nowrap hover:bg-gray-100"
-        >
-          Sign Out
-          <MdLogout className="text-xl text-red-400" />
-        </button>
-      </div>
+      {user ? userDropdownContent : guestDropdownContent}
     </div>
   );
 };

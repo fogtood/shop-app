@@ -90,9 +90,18 @@ const Navbar = () => {
     <>
       <nav className="py-4 sticky top-0 z-50" ref={navbar}>
         <div className="px-4 xl:px-[4rem] flex items-center justify-between">
-          <Link to="/">
-            <img src={brand} alt="" className="h-8 lg:h-10 md:h-auto" />
-          </Link>
+          <div className="flex items-center">
+            <button
+              className="p-2 hover:bg-gray-100 cursor-pointer md:hidden"
+              onClick={toggleSidebar}
+            >
+              <Menu width={18} />
+            </button>
+            <Link to="/" className="flex items-center gap-2">
+              <img src={brand} alt="" className="h-8 lg:h-10 md:h-auto" />
+              {/* <h1 className="text-xl md:text-2xl font-bold">Quick Cart</h1> */}
+            </Link>
+          </div>
           <div className="hidden md:flex items-center gap-8 lg:gap-10">
             {navbarLinks.map(({ name, url }, idx) => (
               <NavLink
@@ -140,9 +149,11 @@ const Navbar = () => {
             <div className="hidden md:flex items-center gap-4">
               {user ? (
                 <>
-                  <p className="font-medium text-sm text-text hidden lg:block">
-                    {formatDisplayName(user.displayName)}
-                  </p>
+                  {user && (
+                    <p className="font-medium text-sm text-text hidden lg:block">
+                      {formatDisplayName(user.displayName)}
+                    </p>
+                  )}
                   <ProfileDropdown />
                 </>
               ) : (
@@ -178,12 +189,7 @@ const Navbar = () => {
                 </div>
               )}
             </button>
-            <button
-              className="p-2 hover:bg-gray-100 cursor-pointer"
-              onClick={toggleSidebar}
-            >
-              <Menu />
-            </button>
+            <ProfileDropdown />
           </div>
         </div>
       </nav>
