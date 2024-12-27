@@ -12,7 +12,7 @@ const Shop = () => {
     <div className="max-w-6xl mx-auto min-h-screen">
       <div className="space-y-10 pt-4 pb-28">
         {SHOP_DATA.map((categories) => (
-          <div key={categories.title} className="w-full">
+          <div key={categories.title} className="w-full px-6">
             <div className="flex items-center justify-between my-5">
               <p className="font-semibold text-2xl">
                 {categories.title.toUpperCase()}
@@ -26,7 +26,7 @@ const Shop = () => {
                 View All
               </Button>
             </div>
-            <div className="grid grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
               {categories.items.slice(0, 4).map((item) => (
                 <div key={item.id}>
                   <ItemCard item={item} />

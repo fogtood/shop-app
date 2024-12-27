@@ -11,6 +11,9 @@ export default {
         text: "#4b5563",
         primary: "#d1d5db",
       },
+      screens: {
+        xs: "450px",
+      },
     },
   },
   plugins: [
