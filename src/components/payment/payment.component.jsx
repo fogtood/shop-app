@@ -121,7 +121,7 @@ const PaymentOption = ({ register, errors }) => {
 
         {paymentMethod === "credit-card" && (
           <div className="mt-4 space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid xs:grid-cols-2 gap-4">
               <div>
                 <Input
                   label={

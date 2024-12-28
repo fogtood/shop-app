@@ -172,13 +172,13 @@ export const CartItemCard = ({ item }) => {
         <p className="text-lg font-semibold">${totalItemPrice}</p>
         <div className="flex sm:hidden gap-3">
           <button
-            className="flex-1 border border-primary bg-transparent hover:bg-primary px-3 font-semibold text-sm transition-colors text-text"
+            className="flex-1 border border-primary bg-transparent px-3 font-semibold text-sm transition-colors text-text"
             onClick={() => dispatch(increaseItemQuantity({ ...item }))}
           >
             +
           </button>
           <button
-            className="flex-1 border border-primary bg-transparent hover:bg-primary px-3 font-semibold text-sm transition-colors text-text disabled:cursor-not-allowed"
+            className="flex-1 border border-primary bg-transparent px-3 font-semibold text-sm transition-colors text-text disabled:cursor-not-allowed"
             disabled={item.quantity <= 1}
             onClick={() => dispatch(decreaseItemQuantity({ ...item }))}
           >

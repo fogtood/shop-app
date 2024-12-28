@@ -96,7 +96,7 @@ const Shipping = () => {
         Shipping Details
       </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid xs:grid-cols-2 gap-6">
           <Input
             label={
               errors.displayName ? errors.displayName.message : "Full Name"

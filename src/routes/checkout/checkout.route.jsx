@@ -15,7 +15,7 @@ const CheckOut = () => {
   const description = ["order", "shipping", "payment"];
 
   return (
-    <div className="min-h-screen w-[740px] mx-auto py-10">
+    <div className="min-h-screen max-w-[740px] mx-auto py-10 px-6">
       <Stepper step={step} description={description} />
 
       {/* Immediately Invoked function */}
