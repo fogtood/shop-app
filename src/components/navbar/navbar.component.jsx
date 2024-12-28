@@ -7,23 +7,30 @@ import ProfileDropdown from "../profile-dropdown/profile-dropdown.component";
 import Sheet from "../sheet/sheet.component";
 import Sidebar from "../sidebar/sidebar.component";
 import brand from "../../assets/brand.png";
+import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
+import { MdOutlineFeaturedPlayList } from "react-icons/md";
+import { BsStars } from "react-icons/bs";
 
 const navbarLinks = [
   {
-    name: "Home",
-    url: "/",
+    to: "/",
+    text: "Home",
+    icon: <AiOutlineHome className="text-xl" />,
   },
   {
-    name: "Shop",
-    url: "/shop",
+    to: "/shop",
+    text: "Shop",
+    icon: <AiOutlineShoppingCart className="text-xl" />,
   },
   {
-    name: "Featured",
-    url: "/featured",
+    to: "/featured",
+    text: "Featured",
+    icon: <MdOutlineFeaturedPlayList className="text-xl" />,
   },
   {
-    name: "Recommended",
-    url: "/recommended",
+    to: "/recommended",
+    text: "Recommended",
+    icon: <BsStars className="text-xl" />,
   },
 ];
 
@@ -80,17 +87,17 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="hidden md:flex items-center gap-8 lg:gap-10">
-            {navbarLinks.map(({ name, url }, idx) => (
+            {navbarLinks.map(({ text, to }, idx) => (
               <NavLink
                 key={idx}
-                to={url}
+                to={to}
                 className={({ isActive }) =>
                   `${
                     isActive ? "text-black font-bold" : "text-text"
                   } text-sm font-medium hover:bg-gray-100 p-2 rounded-sm`
                 }
               >
-                {name}
+                {text}
               </NavLink>
             ))}
           </div>
@@ -175,7 +182,6 @@ const Navbar = () => {
         navbarLinks={navbarLinks}
         isSidebarOpen={isSidebarOpen}
         closeSidebar={closeSidebar}
-        user={user}
       />
     </>
   );

@@ -1,10 +1,7 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import Button from "../button/button.component";
+import { NavLink } from "react-router-dom";
 import { X } from "lucide-react";
 
-const Sidebar = ({ isSidebarOpen, closeSidebar, navbarLinks, user }) => {
-  const navigate = useNavigate();
-
+const Sidebar = ({ isSidebarOpen, closeSidebar, navbarLinks }) => {
   return (
     <>
       {isSidebarOpen && (
@@ -30,44 +27,23 @@ const Sidebar = ({ isSidebarOpen, closeSidebar, navbarLinks, user }) => {
         <div className="flex-1 p-4 overflow-y-auto">
           <div className="flex flex-col h-full">
             <div className="flex-1 flex flex-col gap-4">
-              {navbarLinks.map(({ name, url }, idx) => (
+              {navbarLinks.map(({ text, to, icon }, idx) => (
                 <NavLink
                   key={idx}
-                  to={url}
+                  to={to}
                   className={({ isActive }) =>
                     `${
-                      isActive ? "text-black font-bold" : "text-text"
-                    } text-sm font-medium hover:bg-gray-100 p-2 rounded-sm`
+                      isActive
+                        ? "text-black font-bold bg-gray-100"
+                        : "text-text"
+                    } flex items-center gap-4 text-sm font-medium hover:bg-gray-100 p-2 rounded-md`
                   }
                   onClick={closeSidebar}
                 >
-                  {name}
+                  {icon}
+                  <span>{text}</span>
                 </NavLink>
               ))}
-              {!user && (
-                <div className="flex flex-col gap-4">
-                  <Button
-                    buttonType={"primary"}
-                    disabled={location.pathname === "/sign-up"}
-                    onClick={() => {
-                      navigate("/sign-up");
-                      closeSidebar();
-                    }}
-                  >
-                    Sign Up
-                  </Button>
-                  <Button
-                    buttonType={"secondary"}
-                    disabled={location.pathname === "/sign-in"}
-                    onClick={() => {
-                      navigate("/sign-in");
-                      closeSidebar();
-                    }}
-                  >
-                    Sign In
-                  </Button>
-                </div>
-              )}
             </div>
           </div>
         </div>
