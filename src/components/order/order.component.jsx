@@ -29,7 +29,7 @@ const Order = () => {
           </p>
           <div className="flex flex-col gap-3 xs:flex-row xs:items-center xs:justify-between mt-8">
             <button
-              className="flex items-center gap-2 bg-gray-200 p-3 border border-primary text-text font-semibold hover:bg-gray-50 transition-colors duration-300 disabled:cursor-not-allowed"
+              className="flex items-center justify-center xs:justify-start gap-2 bg-gray-200 p-3 border border-primary text-text font-semibold hover:bg-gray-50 transition-colors duration-300 disabled:cursor-not-allowed"
               onClick={() => navigate("/shop")}
             >
               <BsShop /> Continue Shopping

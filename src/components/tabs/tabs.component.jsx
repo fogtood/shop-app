@@ -46,14 +46,14 @@ const Tabs = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <div className="w-[720px] mx-auto">
-      <div className="bg-[#f2f2f2] text-text px-8">
-        <div className="relative p-0 flex">
+    <div className="max-w-[720px] mx-auto">
+      <div className="bg-[#f2f2f2] text-text px-5 xs:px-8">
+        <div className="relative p-0 flex overflow-x-auto scrollbar-hide">
           {tabsData.map((tab, idx) => (
             <button
               key={idx}
               onClick={() => setActiveTab(idx)}
-              className={`p-4 text-center font-medium text-sm relative ${
+              className={`py-4 px-2 xs:p-4 text-center font-medium text-sm relative whitespace-nowrap ${
                 activeTab === idx
                   ? "bg-white text-[#4a4a4a] font-semibold"
                   : "bg-[#f2f2f2] text-text border-b-2 border-transparent"
@@ -64,7 +64,9 @@ const Tabs = () => {
           ))}
         </div>
       </div>
-      <div className="p-5 bg-white">{tabsData[activeTab].content}</div>
+      <div className="px-2 py-5 xs:p-5 bg-white">
+        {tabsData[activeTab].content}
+      </div>
     </div>
   );
 };

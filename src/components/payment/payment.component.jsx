@@ -41,7 +41,6 @@ const Payment = () => {
         toast.warn("PayPal payment is not yet supported");
         break;
       case "credit-card":
-        console.log(data);
         dispatch(resetCheckout());
         dispatch(clearCart());
         navigate("/");

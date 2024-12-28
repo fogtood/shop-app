@@ -72,7 +72,7 @@ const Navbar = () => {
               className="p-2 hover:bg-gray-100 cursor-pointer md:hidden"
               onClick={toggleSidebar}
             >
-              <Menu width={18} />
+              <Menu />
             </button>
             <Link to="/" className="flex items-center gap-2">
               <img src={brand} alt="" className="h-8 lg:h-10 md:h-auto" />

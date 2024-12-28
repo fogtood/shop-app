@@ -110,7 +110,7 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="bg-main min-h-screen pt-8 py-24 w-[600px] mx-auto">
+    <div className="bg-main min-h-screen pt-8 py-24 px-6 max-w-[600px] mx-auto">
       <h1 className="text-xl font-bold text-center">Edit Acount Details</h1>
       <div className="mt-4">
         <ProfileBannerAvatar
@@ -119,7 +119,7 @@ const EditProfile = () => {
           avatar={avatar}
           handleImageChange={handleImageChange}
         />
-        <form className="mt-20 mx-6" onSubmit={handleFormSubmit}>
+        <form className="mt-20 xs:mx-6" onSubmit={handleFormSubmit}>
           <div className="space-y-6">
             <Input
               label={"Full Name"}
@@ -151,9 +151,9 @@ const EditProfile = () => {
               onChange={handleInputChange}
             />
           </div>
-          <div className="flex items-center justify-between mt-8">
+          <div className="flex flex-col xs:flex-row gap-4 xs:gap-0 xs:items-center xs:justify-between mt-8">
             <button
-              className="flex items-center gap-2 bg-gray-200 p-3 border border-primary text-text font-semibold hover:bg-gray-50 transition-colors duration-300 disabled:cursor-not-allowed"
+              className="flex items-center justify-center xs:justify-start gap-2 bg-gray-200 p-3 border border-primary text-text font-semibold hover:bg-gray-50 transition-colors duration-300 disabled:cursor-not-allowed"
               onClick={() => navigate("/account")}
               disabled={loading}
             >

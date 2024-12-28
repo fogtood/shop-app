@@ -12,20 +12,25 @@ const ProfileBannerAvatar = ({ edit, banner, avatar, handleImageChange }) => {
   return (
     <div className="relative">
       <div className="h-44 w-full">
-        <img
-          src={banner?.imagePreview || user?.banner || defaultBanner}
-          alt="user-banner"
-          className="h-full w-full object-cover object-center"
+        <div
+          className="w-full h-full"
+          style={{
+            backgroundImage: `url(${
+              banner?.imagePreview || user?.banner || defaultBanner
+            })`,
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+          }}
         />
       </div>
-      <div className="absolute -bottom-1/4 px-6 w-full">
+      <div className="absolute -bottom-10 xs:-bottom-12 px-3 xs:px-6 w-full">
         <div className="flex justify-between items-center w-full">
           <div className="relative rounded-full">
             <img
               src={avatar?.imagePreview || user.avatar || defaultAvatar}
               alt="user-avatar"
               referrerPolicy="no-referrer"
-              className="rounded-full h-[94px] w-[94px] border-4 border-white object-cover"
+              className="rounded-full h-20 w-20 xs:h-[94px] xs:w-[94px] border-4 border-white object-cover"
             />
             {edit && (
               <label className="absolute bottom-2 right-0 p-2 rounded-full shadow-md cursor-pointer bg-black text-white font-medium hover:bg-black/80 transition disabled:cursor-not-allowed disabled:opacity-30 disabled:bg-black">
@@ -50,12 +55,22 @@ const ProfileBannerAvatar = ({ edit, banner, avatar, handleImageChange }) => {
               />
             </label>
           ) : (
-            <Button
-              buttonType={"primary"}
-              onClick={() => navigate("/account/edit")}
-            >
-              Edit Account
-            </Button>
+            <>
+              <button
+                className="block xs:hidden p-2 rounded-full shadow-md cursor-pointer bg-black text-white font-medium hover:bg-black/80 transition disabled:cursor-not-allowed disabled:opacity-30 disabled:bg-black"
+                onClick={() => navigate("/account/edit")}
+              >
+                <AiOutlineEdit className="text-lg" />
+              </button>
+              <div className="hidden xs:block">
+                <Button
+                  buttonType={"primary"}
+                  onClick={() => navigate("/account/edit")}
+                >
+                  Edit Account
+                </Button>
+              </div>
+            </>
           )}
         </div>
       </div>
