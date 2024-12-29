@@ -14,6 +14,10 @@ import {
   getDoc,
   doc,
   serverTimestamp,
+  collection,
+  writeBatch,
+  getDocs,
+  query,
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -161,6 +165,47 @@ export const updateUserProfile = async (
     await setDoc(userDocRef, updates, { merge: true });
   } catch (error) {
     console.error("Error updating profile:", error.message);
+    throw error;
+  }
+};
+
+export const fetchCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, "categories");
+  const q = query(collectionRef);
+  let categoryMap;
+
+  try {
+    const querySnapshot = await getDocs(q);
+    categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+      const { title, items } = docSnapshot.data();
+      acc[title.toLowerCase()] = items;
+      return acc;
+    }, {});
+  } catch (error) {
+    console.error("Error fetching categories", error);
+    throw error;
+  }
+
+  return categoryMap;
+};
+
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  try {
+    const collectionRef = collection(db, collectionKey);
+    const batch = writeBatch(db);
+
+    objectsToAdd.forEach((object) => {
+      const docRef = doc(collectionRef, object.title.toLowerCase());
+      batch.set(docRef, object);
+    });
+
+    await batch.commit();
+    console.log("Batch write completed successfully");
+  } catch (error) {
+    console.error("Error adding collection and documents:", error);
     throw error;
   }
 };
