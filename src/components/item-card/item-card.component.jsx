@@ -58,4 +58,19 @@ const ItemCard = ({ item }) => {
   );
 };
 
+export const ItemCardSkeleton = () => {
+  return (
+    <div className="bg-[#f2f2f2] h-80 animate-pulse">
+      {/* Skeleton Image Section */}
+      <div className="h-[60%] bg-gray-200" />
+
+      {/* Skeleton Content Section */}
+      <div className="h-[40%] flex flex-col items-center justify-center gap-y-3 px-4">
+        <div className="h-4 bg-gray-200 rounded w-3/4" />
+        <div className="h-6 bg-gray-200 rounded w-1/4" />
+      </div>
+    </div>
+  );
+};
+
 export default ItemCard;
