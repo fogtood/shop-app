@@ -4,6 +4,7 @@ import ItemCard, {
   ItemCardSkeleton,
 } from "../../components/item-card/item-card.component";
 import Button from "../../components/button/button.component";
+import { Error } from "../category/category.route";
 import { useGetCategoriesQuery } from "../../services/api/endpoints/categoriesApi";
 
 const Shop = () => {
@@ -19,24 +20,7 @@ const Shop = () => {
 
   if (isLoading) return <ShopLoader />;
 
-  if (error) {
-    return (
-      <div className="flex items-start justify-center py-52 bg-main">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold">Error</h1>
-          <p className="font-medium">
-            {error}
-            <button
-              className="underline text-blue-500 cursor-pointer ml-2"
-              onClick={() => refetch()}
-            >
-              retry
-            </button>
-          </p>
-        </div>
-      </div>
-    );
-  }
+  if (error) return <Error error={error} refetch={refetch} />;
 
   return (
     <div className="max-w-6xl mx-auto min-h-screen">

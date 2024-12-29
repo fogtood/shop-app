@@ -1,5 +1,8 @@
 import { apiSlice } from "../apiSlice";
-import { fetchCategoriesAndDocuments } from "../../../utils/firebase/firebase.utils";
+import {
+  fetchCategoriesAndDocuments,
+  fetchCategory,
+} from "../../../utils/firebase/firebase.utils";
 
 export const categoriesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -14,7 +17,20 @@ export const categoriesApi = apiSlice.injectEndpoints({
       },
       providesTags: ["Categories"],
     }),
+    getCategory: builder.query({
+      async queryFn(category) {
+        try {
+          const categoryData = await fetchCategory(category);
+          return { data: categoryData };
+        } catch (error) {
+          return { error: error.message };
+        }
+      },
+      providesTags: (result, error, category) => [
+        { type: "Category", id: category },
+      ],
+    }),
   }),
 });
 
-export const { useGetCategoriesQuery } = categoriesApi;
+export const { useGetCategoriesQuery, useGetCategoryQuery } = categoriesApi;

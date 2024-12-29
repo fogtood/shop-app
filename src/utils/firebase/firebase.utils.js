@@ -189,6 +189,24 @@ export const fetchCategoriesAndDocuments = async () => {
   return categoryMap;
 };
 
+export const fetchCategory = async (category) => {
+  if (!category) return null;
+
+  try {
+    const categoryDocRef = doc(db, "categories", category);
+    const categorySnapshot = await getDoc(categoryDocRef);
+
+    if (categorySnapshot.exists()) {
+      return categorySnapshot.data();
+    } else {
+      throw new Error("Category does not exist");
+    }
+  } catch (error) {
+    console.error("Error fetching category:", error);
+    throw error;
+  }
+};
+
 export const addCollectionAndDocuments = async (
   collectionKey,
   objectsToAdd
