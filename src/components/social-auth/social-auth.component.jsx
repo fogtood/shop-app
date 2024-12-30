@@ -1,11 +1,7 @@
 import Button from "../button/button.component";
 import { FaFacebook, FaGoogle, FaGithub } from "react-icons/fa6";
 
-const SocialSignIn = ({
-  isSubmitting,
-  socialLoading,
-  signInWithGoogleHandler,
-}) => {
+const SocialSignIn = ({ isSubmitting, socialLoading, handleSocialAuth }) => {
   return (
     <div className="space-y-5">
       <Button
@@ -15,6 +11,7 @@ const SocialSignIn = ({
         textColor={"text-white"}
         hoverColor={"hover:bg-blue-700"}
         disabled={isSubmitting || socialLoading}
+        onClick={() => handleSocialAuth("facebook")}
       >
         Continue with Facebook
       </Button>
@@ -27,7 +24,7 @@ const SocialSignIn = ({
         hoverColor={"hover:bg-primary hover:border-none hover:py-[13px]"}
         border={"border border-primary"}
         disabled={isSubmitting || socialLoading}
-        onClick={signInWithGoogleHandler}
+        onClick={() => handleSocialAuth("google")}
       >
         Continue with Google
       </Button>

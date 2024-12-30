@@ -5,7 +5,6 @@ import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
   fetchUserDocumentFromAuth,
-  signInWithGoogle,
 } from "../../utils/firebase/firebase.utils";
 
 const SignUp = () => {
@@ -18,19 +17,12 @@ const SignUp = () => {
     await fetchUserDocumentFromAuth(user.uid);
   };
 
-  const handleSocialAuth = async () => {
-    const { user } = await signInWithGoogle();
-    await createUserDocumentFromAuth(user);
-    await fetchUserDocumentFromAuth(user.uid);
-  };
-
   return (
     <AuthForm
       mode="signup"
       title="Sign up to Cannabud"
       schema={signUpSchema}
       onSubmit={handleSubmit}
-      onSocialAuth={handleSocialAuth}
     />
   );
 };

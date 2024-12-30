@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import {
   getAuth,
   GoogleAuthProvider,
+  FacebookAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
@@ -36,6 +37,7 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 const googleProvider = new GoogleAuthProvider();
+const facebookProvider = new FacebookAuthProvider();
 
 googleProvider.setCustomParameters({
   prompt: "select_account",
@@ -46,6 +48,15 @@ export const signInWithGoogle = async () => {
     return await signInWithPopup(auth, googleProvider);
   } catch (error) {
     console.error(error.message);
+    throw error;
+  }
+};
+
+export const signInWithFacebook = async () => {
+  try {
+    return await signInWithPopup(auth, facebookProvider);
+  } catch (error) {
+    console.error("Error during Facebook sign-in:", error);
     throw error;
   }
 };

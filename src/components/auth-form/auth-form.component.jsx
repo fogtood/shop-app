@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  createUserDocumentFromAuth,
+  fetchUserDocumentFromAuth,
+  signInWithFacebook,
+  signInWithGoogle,
+} from "../../utils/firebase/firebase.utils";
 import { firebaseErrorMessages } from "../../utils/errorMessages";
 import { ArrowRight } from "lucide-react";
 import { ClipLoader } from "react-spinners";
@@ -17,7 +23,6 @@ const AuthForm = ({
   title,
   schema,
   onSubmit,
-  onSocialAuth,
 }) => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
@@ -55,10 +60,18 @@ const AuthForm = ({
     }
   };
 
-  const handleSocialAuth = async () => {
+  const handleSocialAuth = async (provider) => {
     setSocialLoading(true);
     try {
-      await onSocialAuth();
+      let result;
+      if (provider === "google") {
+        result = await signInWithGoogle();
+      } else if (provider === "facebook") {
+        result = await signInWithFacebook();
+      }
+
+      await createUserDocumentFromAuth(result.user);
+      await fetchUserDocumentFromAuth(result.user.uid);
       setError(null);
       navigate("/");
     } catch (error) {
@@ -164,7 +177,7 @@ const AuthForm = ({
               <SocialSignIn
                 isSubmitting={isSubmitting}
                 socialLoading={socialLoading}
-                signInWithGoogleHandler={handleSocialAuth}
+                handleSocialAuth={handleSocialAuth}
               />
             </div>
           </div>
