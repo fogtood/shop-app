@@ -12,6 +12,7 @@ import avatar from "../../assets/avatar.png";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 import { toast } from "react-toastify";
 import { clearCart } from "../../store/reducers/cartSlice";
+import { resetCheckout } from "../../store/reducers/checkoutSlice";
 
 const ProfileDropdown = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -43,6 +44,7 @@ const ProfileDropdown = () => {
     try {
       await signOutUser();
       dispatch(clearCart());
+      dispatch(resetCheckout());
       dispatch(logout());
       navigate("/");
       toggleDropdown(e);
