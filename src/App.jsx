@@ -56,8 +56,8 @@ const App = () => {
             email: userDoc.email,
             displayName: userDoc.displayName,
             avatar: userDoc.avatar,
-            mobile: userDoc?.mobile,
-            address: userDoc?.address,
+            mobile: userDoc.mobile || "",
+            address: userDoc.address || "",
             createdAt: userDoc.createdAt
               ? userDoc.createdAt.toDate().toISOString()
               : null,
