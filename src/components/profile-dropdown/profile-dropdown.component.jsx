@@ -11,6 +11,7 @@ import defaultAvatar from ".././../assets/defaultAvatar.jpg";
 import avatar from "../../assets/my_account.png";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 import { toast } from "react-toastify";
+import { clearCart } from "../../store/reducers/cartSlice";
 
 const ProfileDropdown = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -37,6 +38,7 @@ const ProfileDropdown = () => {
   const signOut = async (e) => {
     try {
       await signOutUser();
+      dispatch(clearCart());
       dispatch(logout());
       navigate("/");
       toggleDropdown(e);
