@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/reducers/authSlice";
@@ -8,7 +8,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { HiOutlineLogin } from "react-icons/hi";
 import { BiUserPlus } from "react-icons/bi";
 import defaultAvatar from ".././../assets/defaultAvatar.jpg";
-import avatar from "../../assets/my_account.png";
+import avatar from "../../assets/avatar.png";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 import { toast } from "react-toastify";
 import { clearCart } from "../../store/reducers/cartSlice";
@@ -17,6 +17,10 @@ const ProfileDropdown = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const user = useSelector((state) => state.auth.user);
   const dropdownRef = useRef(null);
+  const avatarSrc = useMemo(
+    () => (user ? user.avatar || defaultAvatar : avatar),
+    [user]
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -133,12 +137,9 @@ const ProfileDropdown = () => {
       >
         <div className="relative overflow-hidden rounded-full transition-transform duration-200">
           <img
-            src={user ? user.avatar || defaultAvatar : avatar}
-            alt={user ? "display-img" : "guest-img"}
+            src={avatarSrc}
             referrerPolicy="no-referrer"
-            className={`h-8 w-8 cursor-pointer object-cover transition-opacity duration-200 group-hover:opacity-90 ${
-              !user && "bg-gray-200 p-2"
-            }`}
+            className="h-8 w-8 cursor-pointer object-cover transition-opacity duration-200 group-hover:opacity-90"
           />
         </div>
         <IoIosArrowDown
