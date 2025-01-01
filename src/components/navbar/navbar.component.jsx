@@ -106,7 +106,11 @@ const Navbar = () => {
             <button
               className="relative p-2 hover:bg-gray-100 cursor-pointer disabled:cursor-not-allowed disabled:opacity-30"
               onClick={toggleSheet}
-              disabled={location.pathname === "/checkout"}
+              disabled={
+                location.pathname === "/checkout" ||
+                location.pathname === "/sign-in" ||
+                location.pathname === "/sign-up"
+              }
             >
               <ShoppingCart />
               {cart.length > 0 && (
@@ -120,7 +124,11 @@ const Navbar = () => {
             <button
               className="hidden md:block lg:hidden relative p-2 hover:bg-gray-100 cursor-pointer disabled:cursor-not-allowed disabled:opacity-30"
               onClick={toggleSheet}
-              disabled={location.pathname === "/checkout"}
+              disabled={
+                location.pathname === "/checkout" ||
+                location.pathname === "/sign-in" ||
+                location.pathname === "/sign-up"
+              }
             >
               <ShoppingCart />
               {cart.length > 0 && (
@@ -164,7 +172,11 @@ const Navbar = () => {
             <button
               className="relative p-2 hover:bg-gray-100 cursor-pointer disabled:cursor-not-allowed disabled:opacity-30"
               onClick={toggleSheet}
-              disabled={location.pathname === "/checkout"}
+              disabled={
+                location.pathname === "/checkout" ||
+                location.pathname === "/sign-in" ||
+                location.pathname === "/sign-up"
+              }
             >
               <ShoppingCart />
               {cart.length > 0 && (
@@ -182,6 +194,7 @@ const Navbar = () => {
         navbarLinks={navbarLinks}
         isSidebarOpen={isSidebarOpen}
         closeSidebar={closeSidebar}
+        user={user}
       />
     </>
   );
