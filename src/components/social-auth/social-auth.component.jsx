@@ -37,6 +37,7 @@ const SocialSignIn = ({ isSubmitting, socialLoading, handleSocialAuth }) => {
         hoverColor={"hover:bg-black/80"}
         border={"border border-primary"}
         disabled={isSubmitting || socialLoading}
+        onClick={() => handleSocialAuth("github")}
       >
         Continue with Github
       </Button>

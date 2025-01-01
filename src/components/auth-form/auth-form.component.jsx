@@ -6,6 +6,7 @@ import {
   createUserDocumentFromAuth,
   fetchUserDocumentFromAuth,
   signInWithFacebook,
+  signInWithGithub,
   signInWithGoogle,
 } from "../../utils/firebase/firebase.utils";
 import { firebaseErrorMessages } from "../../utils/errorMessages";
@@ -68,6 +69,8 @@ const AuthForm = ({
         result = await signInWithGoogle();
       } else if (provider === "facebook") {
         result = await signInWithFacebook();
+      } else if (provider === "github") {
+        result = await signInWithGithub();
       }
 
       await createUserDocumentFromAuth(result.user);

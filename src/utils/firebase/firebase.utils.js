@@ -8,6 +8,7 @@ import {
   onAuthStateChanged,
   signOut,
   signInWithPopup,
+  GithubAuthProvider,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -38,10 +39,14 @@ const storage = getStorage(app);
 
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
+const githubProvider = new GithubAuthProvider();
 
 googleProvider.setCustomParameters({
   prompt: "select_account",
 });
+
+githubProvider.addScope("read:user");
+githubProvider.addScope("read:email");
 
 export const signInWithGoogle = async () => {
   try {
@@ -57,6 +62,15 @@ export const signInWithFacebook = async () => {
     return await signInWithPopup(auth, facebookProvider);
   } catch (error) {
     console.error("Error during Facebook sign-in:", error);
+    throw error;
+  }
+};
+
+export const signInWithGithub = async () => {
+  try {
+    return await signInWithPopup(auth, githubProvider);
+  } catch (error) {
+    console.error("Error during Github sign-in:", error);
     throw error;
   }
 };
