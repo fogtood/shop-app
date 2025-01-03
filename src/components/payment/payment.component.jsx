@@ -46,14 +46,21 @@ const Payment = () => {
   }, [paymentMethod, setValue]);
 
   const handleCardPayment = async () => {
-    const amount = calculateCartTotal(cartItems);
-
     if (!stripe || !elements) {
-      alert("Stripe has not loaded yet. Please try again.");
+      toast.error("Stripe has not loaded yet. Please try again.");
       return;
     }
 
     setIsProcessing(true);
+
+    const totalCartValue = calculateCartTotal(cartItems);
+    // Convert to cents for Stripe (e.g., $0.54 becomes 54 cents)
+    const amount = Math.round(totalCartValue * 100);
+
+    if (amount < 50) {
+      toast.error("The total amount must be at least $0.50");
+      return;
+    }
 
     try {
       const response = await fetch(`${API_URL}/api/create-payment-intent`, {

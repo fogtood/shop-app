@@ -17,6 +17,13 @@ export default async (req, res) => {
 
   const { amount, currency } = req.body;
 
+  // Validate amount
+  if (!amount || amount < 50) {
+    return res
+      .status(400)
+      .json({ error: "Amount must be at least $0.50 (50 cents for USD)." });
+  }
+
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
