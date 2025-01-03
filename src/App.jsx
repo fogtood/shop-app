@@ -21,9 +21,17 @@ import CheckOut from "./routes/checkout/checkout.route";
 import Featured from "./routes/featured/featured.route";
 import Recommended from "./routes/recommended/recommended.route";
 import EditProfile from "./routes/edit-profile/edit-profile.route";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+// import PaymentSuccess from "./routes/payment-success/PaymentSuccess";
+// import PaymentFailure from "./routes/payment-failure/PaymentFailure";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
+
+const stripePromise = loadStripe(
+  "pk_test_51QcnOQKGkFum67gMsvm8Bugjh5QeGoLBWFzepjpFCogqMMGq4Kz16zZlzU3vk6J3MVGJ1D05b7kzQJlvfBMQsfUO00iISjr5My"
+);
 
 const App = () => {
   const dispatch = useDispatch();
@@ -112,30 +120,34 @@ const App = () => {
   return (
     <>
       <ToastContainer position="top-center" />
-      <Routes>
-        <Route path="/" element={<Navigation />}>
-          <Route index element={<Home />} />
-          <Route path="shop" element={<Shop />} />
-          <Route path="shop/:category" element={<Category />} />
-          <Route path="/featured" element={<Featured />} />
-          <Route path="/recommended" element={<Recommended />} />
+      <Elements stripe={stripePromise}>
+        <Routes>
+          <Route path="/" element={<Navigation />}>
+            <Route index element={<Home />} />
+            <Route path="shop" element={<Shop />} />
+            <Route path="shop/:category" element={<Category />} />
+            <Route path="/featured" element={<Featured />} />
+            <Route path="/recommended" element={<Recommended />} />
 
-          {/* Redirect signed-in users away from sign-in and sign-up pages */}
-          <Route element={<AuthRedirectRoute />}>
-            <Route path="sign-in" element={<SignIn />} />
-            <Route path="sign-up" element={<SignUp />} />
+            {/* Redirect signed-in users away from sign-in and sign-up pages */}
+            <Route element={<AuthRedirectRoute />}>
+              <Route path="sign-in" element={<SignIn />} />
+              <Route path="sign-up" element={<SignUp />} />
+            </Route>
+
+            {/* Private Routes */}
+            <Route element={<PrivateRoute />}>
+              <Route path="/account" element={<Account />} />
+              <Route path="/account/edit" element={<EditProfile />} />
+              <Route path="/checkout/*" element={<CheckOut />} />
+              {/* <Route path="/payment-success" element={<PaymentSuccess />} />
+              <Route path="/payment-failure" element={<PaymentFailure />} /> */}
+            </Route>
+
+            <Route path="*" element={<Navigate to="/" />} />
           </Route>
-
-          {/* Private Routes */}
-          <Route element={<PrivateRoute />}>
-            <Route path="/account" element={<Account />} />
-            <Route path="/account/edit" element={<EditProfile />} />
-            <Route path="/checkout/*" element={<CheckOut />} />
-          </Route>
-
-          <Route path="*" element={<Navigate to="/" />} />
-        </Route>
-      </Routes>
+        </Routes>
+      </Elements>
     </>
   );
 };
