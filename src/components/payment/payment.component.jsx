@@ -21,8 +21,8 @@ import {
 } from "@stripe/react-stripe-js";
 import { calculateCartTotal } from "../../utils/calculateCartTotal";
 import { toast } from "react-toastify";
-import { ClipLoader } from "react-spinners";
 import { saveOrderToFirestore } from "../../utils/firebase/firebase.utils";
+import { Loader } from "lucide-react";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -58,7 +58,6 @@ const Payment = () => {
     const totalCartValue = isInternationalShipping
       ? calculateCartTotal(cartItems) + 50
       : calculateCartTotal(cartItems);
-    // Convert to cents for Stripe (e.g., $0.54 becomes 54 cents)
     const amount = Math.round(totalCartValue * 100);
 
     if (amount < 50) {
@@ -88,31 +87,51 @@ const Payment = () => {
         }
       );
 
+      const orderData = {
+        userId: user.uid,
+        orderId: paymentIntent?.id || "N/A",
+        items: cartItems,
+        total: totalCartValue,
+        paymentStatus: paymentIntent?.status || "failed",
+        createdAt: new Date().toISOString(),
+      };
+
       if (error) {
         console.error("Payment failed:", error.message);
-        toast.error(error.message);
-        // navigate("/payment-failure", { state: { fromPayment: true } });
+
+        // Save failed payment data to Firestore
+        try {
+          await saveOrderToFirestore(orderData);
+          toast.error("Payment failed.");
+        } catch (firestoreError) {
+          console.error(
+            "Error saving failed payment to Firestore:",
+            firestoreError.message
+          );
+          toast.error(
+            "Payment failed, and we couldn't save your attempt. Please contact support."
+          );
+        }
       } else if (paymentIntent.status === "succeeded") {
-        const orderData = {
-          userId: user.uid,
-          orderId: paymentIntent.id,
-          items: cartItems,
-          totalAmount: totalCartValue,
-          isInternationalShipping,
-          paymentStatus: paymentIntent.status,
-          createdAt: new Date(),
-        };
-        await saveOrderToFirestore(orderData);
-        toast.success("Payment succeeded!");
-        dispatch(resetCheckout());
-        dispatch(clearCart());
-        // navigate("/payment-success", { state: { fromPayment: true } });
-        navigate("/");
+        try {
+          await saveOrderToFirestore(orderData);
+          toast.success("Payment succeeded!");
+          dispatch(resetCheckout());
+          dispatch(clearCart());
+          navigate("/");
+        } catch (firestoreError) {
+          console.error(
+            "Error saving order to Firestore:",
+            firestoreError.message
+          );
+          toast.error(
+            "Payment succeeded, but we couldn't save your order. Please contact support."
+          );
+        }
       }
     } catch (error) {
       console.error("Error during payment:", error.message);
       toast.error("Something went wrong. Please try again.");
-      // navigate("/payment-failure", { state: { fromPayment: true } });
     } finally {
       setIsProcessing(false);
     }
@@ -156,7 +175,7 @@ const Payment = () => {
             buttonType={"auth"}
             icon={
               isProcessing ? (
-                <ClipLoader size={20} color="white" />
+                <Loader size={20} className="animate-spin" />
               ) : (
                 <FaArrowRight />
               )

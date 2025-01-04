@@ -21,6 +21,8 @@ import {
   getDocs,
   query,
   addDoc,
+  where,
+  orderBy,
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -241,6 +243,24 @@ export const saveOrderToFirestore = async (orderData) => {
     await addDoc(ordersCollectionRef, orderData);
   } catch (error) {
     console.error("Error saving order:", error);
+    throw error;
+  }
+};
+
+export const fetchOrders = async (userId) => {
+  if (!userId) return null;
+
+  try {
+    const ordersCollectionRef = collection(db, "orders");
+    const ordersQuery = query(
+      ordersCollectionRef,
+      where("userId", "==", userId)
+    );
+    const ordersSnapshot = await getDocs(ordersQuery);
+
+    return ordersSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error("Error fetching orders:", error);
     throw error;
   }
 };
