@@ -10,8 +10,7 @@ import {
   signInWithGoogle,
 } from "../../utils/firebase/firebase.utils";
 import { firebaseErrorMessages } from "../../utils/errorMessages";
-import { ArrowRight } from "lucide-react";
-import { ClipLoader } from "react-spinners";
+import { ArrowRight, Loader } from "lucide-react";
 
 import Button from "../../components/button/button.component";
 import Input from "../../components/input/input.component";
@@ -153,7 +152,7 @@ const AuthForm = ({
                     buttonType="auth"
                     icon={
                       isSubmitting || socialLoading ? (
-                        <ClipLoader size={20} color="white" />
+                        <Loader size={20} className="animate-spin" />
                       ) : (
                         <ArrowRight width={20} />
                       )

@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, logout, setError } from "./store/reducers/authSlice";
 import { ToastContainer } from "react-toastify";
 import PrivateRoute from "./utils/private-routes/private-route.util";
-import { ClipLoader } from "react-spinners";
 import Account from "./routes/account/account.route";
 import AuthRedirectRoute from "./utils/private-routes/auth-redirect.route";
 import Category from "./routes/category/category.route";
@@ -23,6 +22,7 @@ import Recommended from "./routes/recommended/recommended.route";
 import EditProfile from "./routes/edit-profile/edit-profile.route";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import logo from "./assets/logo.png";
 // import PaymentSuccess from "./routes/payment-success/PaymentSuccess";
 // import PaymentFailure from "./routes/payment-failure/PaymentFailure";
 
@@ -87,13 +87,11 @@ const App = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-main">
-        <div className="flex items-center justify-center gap-5">
-          <ClipLoader size={100} speedMultiplier={0.6} />
-          <div>
-            <h1 className="text-2xl font-bold">Cannabud Quick Cart</h1>
-            <p className="font-medium text-lg">Shopping at ease!</p>
-          </div>
-        </div>
+        <img
+          src={logo}
+          alt="logo"
+          className="animate-bounce h-28 w-28 object-cover"
+        />
       </div>
     );
   }

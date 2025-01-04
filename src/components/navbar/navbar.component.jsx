@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import ProfileDropdown from "../profile-dropdown/profile-dropdown.component";
 import Sheet from "../sheet/sheet.component";
 import Sidebar from "../sidebar/sidebar.component";
-import brand from "../../assets/brand.png";
+import brand from "../../assets/logo.png";
 import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
 import { MdOutlineFeaturedPlayList } from "react-icons/md";
 import { BsStars } from "react-icons/bs";
@@ -72,7 +72,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="py-4 sticky top-0 z-50" ref={navbar}>
+      <nav className="py-2 sticky top-0 z-50" ref={navbar}>
         <div className="px-4 xl:px-[4rem] flex items-center justify-between">
           <div className="flex items-center">
             <button
@@ -82,7 +82,7 @@ const Navbar = () => {
               <Menu />
             </button>
             <Link to="/" className="flex items-center gap-2">
-              <img src={brand} alt="" className="h-8 lg:h-10 md:h-auto" />
+              <img src={brand} alt="" className="h-12" />
               {/* <h1 className="text-xl md:text-2xl font-bold">Quick Cart</h1> */}
             </Link>
           </div>

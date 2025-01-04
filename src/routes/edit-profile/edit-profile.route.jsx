@@ -12,7 +12,7 @@ import {
 } from "../../utils/firebase/firebase.utils";
 import { login } from "../../store/reducers/authSlice";
 import { toast } from "react-toastify";
-import { ClipLoader } from "react-spinners";
+import { Loader } from "lucide-react";
 
 const defaultImage = {
   image: null,
@@ -163,7 +163,11 @@ const EditProfile = () => {
               type="submit"
               buttonType={"auth"}
               icon={
-                loading ? <ClipLoader size={20} color="white" /> : <FaCheck />
+                loading ? (
+                  <Loader size={20} className="animate-spin" />
+                ) : (
+                  <FaCheck />
+                )
               }
               disabled={loading}
             >
