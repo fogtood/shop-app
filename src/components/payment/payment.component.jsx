@@ -23,8 +23,6 @@ import { calculateCartTotal } from "../../utils/calculateCartTotal";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 
-// add isInternational payment to amount
-
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Payment = () => {
@@ -32,7 +30,9 @@ const Payment = () => {
   const dispatch = useDispatch();
   const stripe = useStripe();
   const elements = useElements();
-  const { paymentMethod } = useSelector((state) => state.checkout);
+  const { paymentMethod, isInternationalShipping } = useSelector(
+    (state) => state.checkout
+  );
   const { cartItems } = useSelector((state) => state.cart);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -53,7 +53,9 @@ const Payment = () => {
 
     setIsProcessing(true);
 
-    const totalCartValue = calculateCartTotal(cartItems);
+    const totalCartValue = isInternationalShipping
+      ? calculateCartTotal(cartItems) + 50
+      : calculateCartTotal(cartItems);
     // Convert to cents for Stripe (e.g., $0.54 becomes 54 cents)
     const amount = Math.round(totalCartValue * 100);
 
