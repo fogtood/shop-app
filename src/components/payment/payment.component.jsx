@@ -22,6 +22,7 @@ import {
 import { calculateCartTotal } from "../../utils/calculateCartTotal";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
+import { saveOrderToFirestore } from "../../utils/firebase/firebase.utils";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -34,6 +35,7 @@ const Payment = () => {
     (state) => state.checkout
   );
   const { cartItems } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.auth);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const { setValue } = useForm({
@@ -91,6 +93,16 @@ const Payment = () => {
         toast.error(error.message);
         // navigate("/payment-failure", { state: { fromPayment: true } });
       } else if (paymentIntent.status === "succeeded") {
+        const orderData = {
+          userId: user.uid,
+          orderId: paymentIntent.id,
+          items: cartItems,
+          totalAmount: totalCartValue,
+          isInternationalShipping,
+          paymentStatus: paymentIntent.status,
+          createdAt: new Date(),
+        };
+        await saveOrderToFirestore(orderData);
         toast.success("Payment succeeded!");
         dispatch(resetCheckout());
         dispatch(clearCart());

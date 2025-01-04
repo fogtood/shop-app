@@ -20,6 +20,7 @@ import {
   writeBatch,
   getDocs,
   query,
+  addDoc,
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -228,6 +229,18 @@ export const fetchCategory = async (category) => {
     }
   } catch (error) {
     console.error("Error fetching category:", error);
+    throw error;
+  }
+};
+
+export const saveOrderToFirestore = async (orderData) => {
+  if (!orderData) return;
+
+  try {
+    const ordersCollectionRef = collection(db, "orders");
+    await addDoc(ordersCollectionRef, orderData);
+  } catch (error) {
+    console.error("Error saving order:", error);
     throw error;
   }
 };
