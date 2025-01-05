@@ -1,15 +1,16 @@
-import { Search, ShoppingCart, Menu } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import Button from "../button/button.component";
 import { useSelector } from "react-redux";
+import Button from "../button/button.component";
 import ProfileDropdown from "../profile-dropdown/profile-dropdown.component";
 import Sheet from "../sheet/sheet.component";
 import Sidebar from "../sidebar/sidebar.component";
+import Searchbox from "../searchbox/searchbox.component";
 import brand from "../../assets/logo.png";
 import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
 import { MdOutlineFeaturedPlayList } from "react-icons/md";
 import { BsStars } from "react-icons/bs";
+import { ShoppingCart, Menu } from "lucide-react";
 
 const navbarLinks = [
   {
@@ -201,16 +202,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-export const Searchbox = () => {
-  return (
-    <div className="flex items-center border border-gray-300 bg-white w-full lg:w-64 max-w-lg">
-      <Search className="mx-2 flex-shrink-0" width={16} />
-      <input
-        type="text"
-        placeholder="Search products..."
-        className="bg-white flex-grow py-2 outline-none px-2 text-sm font-medium text-text placeholder:text-text w-full"
-      />
-    </div>
-  );
-};

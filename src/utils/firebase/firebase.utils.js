@@ -22,7 +22,6 @@ import {
   query,
   addDoc,
   where,
-  orderBy,
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
