@@ -1,25 +1,23 @@
 import { useMemo } from "react";
 import { IoMdCheckmark } from "react-icons/io";
-import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../../store/reducers/cartSlice";
+import useCart from "../../hooks/useCart";
 import { toast } from "react-toastify";
 
 const ItemCard = ({ item }) => {
-  const cart = useSelector((state) => state.cart.cartItems);
-  const dispatch = useDispatch();
+  const { cartItems, addToCart, removeFromCart } = useCart();
 
   const addedToCart = useMemo(
-    () => cart.some((cartItem) => cartItem.id === item.id),
-    [cart, item.id]
+    () => cartItems.some((cartItem) => cartItem.id === item.id),
+    [cartItems, item.id]
   );
 
   const addItemToCart = (item) => {
-    dispatch(addToCart({ ...item }));
+    addToCart({ ...item });
     toast.success("item added to cart");
   };
 
   const removeItemFromCart = (item) => {
-    dispatch(removeFromCart({ ...item }));
+    removeFromCart({ ...item });
     toast.warn("item removed from cart");
   };
 

@@ -1,20 +1,14 @@
 import { X } from "lucide-react";
 import ReactDom from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  removeFromCart,
-  clearCart,
-  increaseItemQuantity,
-  decreaseItemQuantity,
-} from "../../store/reducers/cartSlice";
+import useCart from "../../hooks/useCart";
 import Button from "../button/button.component";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const Sheet = ({ isSheetOpen, closeSheet }) => {
-  const cartItems = useSelector((state) => state.cart.cartItems);
+  const { cartItems, clearCart } = useCart();
   const user = useSelector((state) => state.auth.user);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // Prevent body scroll when sheet is open
@@ -66,7 +60,7 @@ const Sheet = ({ isSheetOpen, closeSheet }) => {
               <div className="flex gap-2">
                 <MiniButton onClick={closeSheet}>Close</MiniButton>
                 <MiniButton
-                  onClick={() => dispatch(clearCart())}
+                  onClick={() => clearCart()}
                   disabled={cartItems.length === 0}
                 >
                   Clear Cart
@@ -121,7 +115,8 @@ const MiniButton = ({ children, ...otherProps }) => {
 };
 
 export const CartItemCard = ({ item }) => {
-  const dispatch = useDispatch();
+  const { increaseItemQuantity, decreaseItemQuantity, removeFromCart } =
+    useCart();
 
   const calculateItemTotal = (item) => {
     return (item.price * item.quantity).toFixed(2);
@@ -136,14 +131,14 @@ export const CartItemCard = ({ item }) => {
           <div className="hidden sm:flex flex-col">
             <button
               className="flex-1 border-y border-primary bg-transparent hover:bg-primary px-3 font-semibold text-sm transition-colors text-text"
-              onClick={() => dispatch(increaseItemQuantity({ ...item }))}
+              onClick={() => increaseItemQuantity({ ...item })}
             >
               +
             </button>
             <button
               className="flex-1 border-y border-primary bg-transparent hover:bg-primary px-3 font-semibold text-sm transition-colors text-text disabled:cursor-not-allowed"
               disabled={item.quantity <= 1}
-              onClick={() => dispatch(decreaseItemQuantity({ ...item }))}
+              onClick={() => decreaseItemQuantity({ ...item })}
             >
               -
             </button>
@@ -173,21 +168,21 @@ export const CartItemCard = ({ item }) => {
         <div className="flex sm:hidden gap-3">
           <button
             className="flex-1 border border-primary bg-transparent px-3 font-semibold text-sm transition-colors text-text"
-            onClick={() => dispatch(increaseItemQuantity({ ...item }))}
+            onClick={() => increaseItemQuantity({ ...item })}
           >
             +
           </button>
           <button
             className="flex-1 border border-primary bg-transparent px-3 font-semibold text-sm transition-colors text-text disabled:cursor-not-allowed"
             disabled={item.quantity <= 1}
-            onClick={() => dispatch(decreaseItemQuantity({ ...item }))}
+            onClick={() => decreaseItemQuantity({ ...item })}
           >
             -
           </button>
         </div>
         <button
           className="border border-primary text-text p-2"
-          onClick={() => dispatch(removeFromCart({ ...item }))}
+          onClick={() => removeFromCart({ ...item })}
         >
           <X size={20} />
         </button>

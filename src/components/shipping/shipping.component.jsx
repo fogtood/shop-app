@@ -13,6 +13,7 @@ import {
   setShippingDetails,
   setInternationalShipping,
 } from "../../store/reducers/checkoutSlice";
+import useCart from "../../hooks/useCart";
 
 const schema = z.object({
   displayName: z
@@ -36,7 +37,7 @@ const Shipping = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { cartItems } = useSelector((state) => state.cart);
+  const { cartItems } = useCart();
   const { shippingDetails, isInternationalShipping } = useSelector(
     (state) => state.checkout
   );

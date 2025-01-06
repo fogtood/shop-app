@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import useCart from "../../hooks/useCart";
 import Button from "../button/button.component";
 import Input from "../input/input.component";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
@@ -34,7 +35,7 @@ const Payment = () => {
   const { paymentMethod, isInternationalShipping } = useSelector(
     (state) => state.checkout
   );
-  const { cartItems } = useSelector((state) => state.cart);
+  const { cartItems } = useCart();
   const { user } = useSelector((state) => state.auth);
   const [isProcessing, setIsProcessing] = useState(false);
 

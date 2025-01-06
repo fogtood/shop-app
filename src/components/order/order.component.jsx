@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import useCart from "../../hooks/useCart";
 import Button from "../button/button.component";
 import { CartItemCard } from "../sheet/sheet.component";
 import { BsShop } from "react-icons/bs";
@@ -7,7 +7,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { calculateCartTotal } from "../../utils/calculateCartTotal";
 
 const Order = () => {
-  const { cartItems } = useSelector((state) => state.cart);
+  const { cartItems } = useCart();
   const navigate = useNavigate();
 
   return (
