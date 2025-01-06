@@ -1,7 +1,7 @@
 import useDocumentTitle from "../../hooks/document-title.hook";
 import { categories } from "../../data/categories";
 import CategoryItem from "../../components/category-item/category-item.component";
-import { Searchbox } from "../../components/navbar/navbar.component";
+import Searchbox from "../../components/searchbox/searchbox.component";
 
 const Home = () => {
   useDocumentTitle("Cannabud | Home");

@@ -20,6 +20,7 @@ import CheckOut from "./routes/checkout/checkout.route";
 import Featured from "./routes/featured/featured.route";
 import Recommended from "./routes/recommended/recommended.route";
 import EditProfile from "./routes/edit-profile/edit-profile.route";
+import Search from "./routes/search/search.route";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import logo from "./assets/logo.png";
@@ -124,8 +125,9 @@ const App = () => {
             <Route index element={<Home />} />
             <Route path="shop" element={<Shop />} />
             <Route path="shop/:category" element={<Category />} />
-            <Route path="/featured" element={<Featured />} />
-            <Route path="/recommended" element={<Recommended />} />
+            <Route path="featured" element={<Featured />} />
+            <Route path="recommended" element={<Recommended />} />
+            <Route path="search/:query" element={<Search />} />
 
             {/* Redirect signed-in users away from sign-in and sign-up pages */}
             <Route element={<AuthRedirectRoute />}>
